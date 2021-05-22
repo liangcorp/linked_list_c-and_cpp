@@ -1,3 +1,14 @@
+/**
+ * @file single_linked_list.h
+ * @author Chen Liang (chen.liang.mail@protonmail.com)
+ * @brief Implementation of single linked list in C
+ * @version 0.1
+ * @date 2021-05-22
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
+
 /* User flag to mark which element is active in the union */
 #define INT_FLAG 0
 #define FLOAT_FLAG 1
