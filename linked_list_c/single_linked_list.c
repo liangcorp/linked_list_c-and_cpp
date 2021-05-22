@@ -8,65 +8,11 @@
  * @copyright Copyright (c) 2021
  *
  */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
-
-/* User flag to mark which element is active in the union */
-#define INT_FLAG 0
-#define FLOAT_FLAG 1
-#define CHAR_FLAG 2
-
-typedef union content
-{
-    int i_num;
-    float f_num;
-    char c;
-} content_t;
-
-typedef struct element
-{
-    content_t *ele_content;
-    int ele_flag;
-    struct element *nxt_ele_ptr;
-} element_t;
-
-int insert_beginning(element_t **head, void *new_var, int content_flag);
-int insert_end(element_t **head, void *new_var, int content_flag);
-int insert_at(element_t **head, void *new_var, int index,
-                                                int content_flag);
-
-int delete_beginning(element_t **head);
-int delete_end(element_t **head);
-int delete_at(element_t **head, int index);
-
-int length_of(element_t *head);
-
-void display_elements(element_t *head);
-
-int free_memory(element_t *head);
-
-int main(void)
-{
-    element_t *head = NULL;
-    int i_new = 100;
-    char c_new = 'A';
-    float f_new = 10.01;
-    char c_new2 = 'B';
-    insert_beginning(&head, &i_new, INT_FLAG);
-    insert_beginning(&head, &c_new, CHAR_FLAG);
-    insert_beginning(&head, &f_new, FLOAT_FLAG);
-
-    insert_end(&head, &c_new2, CHAR_FLAG);
-    delete_beginning(&head);
-    delete_end(&head);
-
-    printf("There are %d elements\n", length_of(head));
-    display_elements(head);
-    free_memory(head);
-
-    return 0;
-}
+#include "single_linked_list.h"
 
 int insert_beginning(element_t **head, void *new_var, int content_flag)
 {
@@ -192,6 +138,83 @@ int insert_end(element_t **head, void *new_var, int content_flag)
     return result;
 }
 
+int insert_at(element_t **head, void *new_var, int index,
+                                                int content_flag)
+{
+    int result = 0;
+    int i = 1;
+
+    element_t *new_element = NULL;
+    element_t *pre_element = NULL;
+    element_t *next_element = NULL;
+
+    content_t *new_content = NULL;
+
+    new_element = calloc(1, sizeof(element_t));
+    new_content = calloc(1, sizeof(content_t));
+
+    if (content_flag == INT_FLAG)
+    {
+        new_content->i_num = *(int *)new_var;
+        new_element->ele_flag = INT_FLAG;
+
+        #ifdef DEBUG
+            printf("Integer %d\n", new_content->i_num);
+        #endif
+    }
+    else if (content_flag == FLOAT_FLAG)
+    {
+        new_content->f_num = *(float *)new_var;
+        new_element->ele_flag = FLOAT_FLAG;
+
+        #ifdef DEBUG
+            printf("Float %d\n", new_content->f_num);
+        #endif
+    }
+    else if (content_flag == CHAR_FLAG)
+    {
+        new_content->c = *(char *)new_var;
+        new_element->ele_flag = CHAR_FLAG;
+
+        #ifdef DEBUG
+            printf("Character %d\n", new_content->c);
+        #endif
+    }
+    else
+    {
+        result = -1;
+    }
+
+    new_element->ele_content = new_content;
+
+    if (*head == NULL)
+    {
+        *head = new_element;
+    }
+    else if (index == 0)
+    {
+        new_element->nxt_ele_ptr = *head;
+        *head = new_element;
+    }
+    else
+    {
+        pre_element = *head;
+        next_element = (*head)->nxt_ele_ptr;
+
+        while(i < index && pre_element->nxt_ele_ptr != NULL)
+        {
+            pre_element = pre_element->nxt_ele_ptr;
+            next_element = pre_element->nxt_ele_ptr;
+            i++;
+        }
+
+        pre_element->nxt_ele_ptr = new_element;
+        new_element->nxt_ele_ptr = next_element;
+    }
+
+    return result;
+}
+
 int delete_beginning(element_t **head)
 {
     int result = 0;
@@ -238,6 +261,11 @@ int delete_end(element_t **head)
         free(to_be_removed->ele_content);
         free(to_be_removed);
     }
+}
+
+int delete_at(element_t **head, int index)
+{
+
 }
 
 int length_of(element_t *head)
