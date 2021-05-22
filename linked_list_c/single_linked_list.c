@@ -265,7 +265,40 @@ int delete_end(element_t **head)
 
 int delete_at(element_t **head, int index)
 {
+    int result = 0;
+    int i = 1;
 
+    element_t *to_be_removed = NULL;
+    element_t *pre_element = NULL;
+
+    if (*head == NULL)
+    {
+       result = -1;
+    }
+    else if (index == 0)
+    {
+        to_be_removed = *head;
+        *head = (*head)->nxt_ele_ptr;
+    }
+    else
+    {
+        pre_element = *head;
+        to_be_removed = (*head)->nxt_ele_ptr;
+
+        while(i < index && to_be_removed->nxt_ele_ptr != NULL)
+        {
+            pre_element = pre_element->nxt_ele_ptr;
+            to_be_removed = pre_element->nxt_ele_ptr;
+            i++;
+        }
+
+        pre_element->nxt_ele_ptr = to_be_removed->nxt_ele_ptr;
+    }
+
+    free(to_be_removed->ele_content);
+    free(to_be_removed);
+
+    return result;
 }
 
 int length_of(element_t *head)

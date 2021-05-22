@@ -18,6 +18,7 @@ int main(void)
     insert_at(&head, &c_new3, 9, CHAR_FLAG);
     // delete_beginning(&head);
     // delete_end(&head);
+    delete_at(&head, 3);
 
     printf("There are %d elements\n", length_of(head));
     display_elements(head);
