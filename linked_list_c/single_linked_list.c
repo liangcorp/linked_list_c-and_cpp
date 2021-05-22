@@ -58,6 +58,8 @@ int main(void)
     insert_beginning(&head, &f_new, FLOAT_FLAG);
 
     insert_end(&head, &c_new2, CHAR_FLAG);
+    delete_beginning(&head);
+    delete_end(&head);
 
     printf("There are %d elements\n", length_of(head));
     display_elements(head);
@@ -190,6 +192,53 @@ int insert_end(element_t **head, void *new_var, int content_flag)
     return result;
 }
 
+int delete_beginning(element_t **head)
+{
+    int result = 0;
+    element_t *to_be_removed = NULL;
+
+    if (*head == NULL)
+    {
+        result = -1;
+    }
+    else
+    {
+        to_be_removed = *head;
+        *head = (*head)->nxt_ele_ptr;
+
+        free(to_be_removed->ele_content);
+        free(to_be_removed);
+    }
+
+    return result;
+}
+
+int delete_end(element_t **head)
+{
+    int result = 0;
+
+    element_t *to_be_removed = NULL;
+    element_t *new_tail = NULL;
+
+    if (*head == NULL)
+    {
+        result = -1;
+    }
+    else
+    {
+        to_be_removed = *head;
+
+        while (to_be_removed->nxt_ele_ptr != NULL)
+        {
+            new_tail = to_be_removed;
+            to_be_removed = to_be_removed->nxt_ele_ptr;
+        }
+        new_tail->nxt_ele_ptr = NULL;
+
+        free(to_be_removed->ele_content);
+        free(to_be_removed);
+    }
+}
 
 int length_of(element_t *head)
 {
@@ -242,6 +291,8 @@ int free_memory(element_t *head)
         all elements in the linked list as well as the memory of
         the content.
      */
+    int result = 0;
+
     element_t *to_be_removed = NULL;
 
     while (head != NULL)
@@ -256,5 +307,5 @@ int free_memory(element_t *head)
         free(to_be_removed);
     }
 
-    return 0;
+    return result;
 }
