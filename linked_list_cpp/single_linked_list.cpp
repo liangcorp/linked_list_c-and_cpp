@@ -12,6 +12,16 @@
 #include <iostream>
 #include "single_linked_list.h"
 
+SingleLinkedList::SingleLinkedList()
+{
+    node_t head;
+    head.next_node_ptr = NULL;
+    head.num = 0;
+
+    this -> no_of_element = 0;
+    this -> node_flag = INT_FLAG;
+}
+
 int SingleLinkedList::length_of()
 {
     return no_of_element;

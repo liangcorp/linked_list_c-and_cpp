@@ -9,6 +9,10 @@
  *
  */
 
+#define INT_FLAG 0
+#define FLOAT_FLAG 1
+#define CHAR_FLAG 2
+
 class SingleLinkedList
 {
     private:
@@ -19,6 +23,7 @@ class SingleLinkedList
         } node_t;
 
         static int no_of_element;
+        static int node_flag;
 
     public:
         int add_first(node_t **head);
@@ -37,4 +42,6 @@ class SingleLinkedList
         static int length_of();
 
         int free_memory(node_t **head);
+
+        SingleLinkedList();
 };
