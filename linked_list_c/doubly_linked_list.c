@@ -282,6 +282,70 @@ int remove_last(node_t **head, node_t **tail)
     return result;
 }
 
+int remove_at(node_t **head, node_t **tail, int position)
+{
+    int result = 0;
+    int index = 0;
+
+    node_t *to_be_removed = NULL;
+    node_t *previous_node = NULL;
+    node_t *next_node = NULL;
+
+    to_be_removed = *head;
+
+    while (to_be_removed->nxt_node != NULL)
+    {
+        to_be_removed = to_be_removed->nxt_node;
+        index++;
+    }
+
+    if (*head == NULL && *tail == NULL)
+    {
+        result = -1;
+    }
+    else if (index < position)
+    {
+        result = -1;
+    }
+    else if (position == 0)
+    {
+        to_be_removed = *head;
+        *head = (*head)->nxt_node;
+        (*head)->pre_node = NULL;
+    }
+    else if (position == index)
+    {
+        to_be_removed = *tail;
+        *tail = (*tail)->pre_node;
+        (*tail)->nxt_node = NULL;
+    }
+    else
+    {
+        to_be_removed = *head;
+        index = 0;
+
+        for (index = 0; index < position; index++)
+        {
+            previous_node = to_be_removed;
+            next_node = to_be_removed->nxt_node;
+
+            to_be_removed = to_be_removed->nxt_node;
+        }
+
+        previous_node->nxt_node = to_be_removed->nxt_node;
+        next_node = to_be_removed->nxt_node;
+        next_node->pre_node = previous_node;
+    }
+
+    if (result != -1)
+    {
+        free(to_be_removed->content);
+        free(to_be_removed);
+    }
+
+    return result;
+}
+
 void display(node_t *head)
 {
     int i = 0;
@@ -354,6 +418,7 @@ int free_memory(node_t *head)
     {
         to_be_removed = head;
         head = head->nxt_node;
+
         free(to_be_removed->content);
         free(to_be_removed);
     }
@@ -381,7 +446,9 @@ int main(void)
 
     remove_first(&head, &tail);
     remove_last(&head, &tail);
+    remove_at(&head, &tail, 2);
 
+    printf("Number of nodes %d\n", length_of(head));
     display(head);
     printf("----------------------\n");
     display_reverse(tail);
