@@ -234,9 +234,15 @@ int remove_first(node_t **head, node_t **tail)
     {
         result = -1;
     }
-    else
+    else if ((*head)->nxt_node == NULL)
     {
         to_be_removed = *head;
+        *head = NULL;
+        *tail = NULL;
+    }
+    else
+    {
+
         *head = (*head)->nxt_node;
         (*head)->pre_node = NULL;
     }
@@ -273,11 +279,12 @@ void display_reverse(node_t *tail)
     int i = 0;
     node_t *current_node = tail;
 
-    while (current_node->pre_node != NULL)
-    {
-        current_node = current_node->pre_node;
-        i++;
-    }
+    if (tail != NULL)
+        while (current_node->pre_node != NULL)
+        {
+            current_node = current_node->pre_node;
+            i++;
+        }
 
     while (tail != NULL)
     {
@@ -337,11 +344,11 @@ int main(void)
     float f_num2 = 20.02;
 
     add_first(&head, &tail, &i_num, INT_FLAG);
-    add_first(&head, &tail, &c1, CHAR_FLAG);
-    add_end(&head, &tail, &f_num, FLOAT_FLAG);
-    add_end(&head, &tail, &i_num2, INT_FLAG);
+    // add_first(&head, &tail, &c1, CHAR_FLAG);
+    // add_end(&head, &tail, &f_num, FLOAT_FLAG);
+    // add_end(&head, &tail, &i_num2, INT_FLAG);
 
-    add_at(&head, &tail, &f_num2, FLOAT_FLAG, 9);
+    // add_at(&head, &tail, &f_num2, FLOAT_FLAG, 9);
 
     remove_first(&head, &tail);
 
