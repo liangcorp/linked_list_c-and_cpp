@@ -211,6 +211,39 @@ int add_at(node_t **head, node_t **tail, void *new_var,
             next_node->pre_node = new_node;
     }
 
+    current_node = *head;
+
+    while (current_node->nxt_node != NULL)
+    {
+        current_node = current_node->nxt_node;
+
+    }
+
+    *tail = current_node;
+
+    return result;
+}
+
+int remove_first(node_t **head, node_t **tail)
+{
+    int result = 0;
+
+    node_t *to_be_removed = NULL;
+
+    if (*head == NULL && *tail == NULL)
+    {
+        result = -1;
+    }
+    else
+    {
+        to_be_removed = *head;
+        *head = (*head)->nxt_node;
+        (*head)->pre_node = NULL;
+    }
+
+    free(to_be_removed->content);
+    free(to_be_removed);
+
     return result;
 }
 
@@ -310,9 +343,11 @@ int main(void)
 
     add_at(&head, &tail, &f_num2, FLOAT_FLAG, 9);
 
+    remove_first(&head, &tail);
+
     display(head);
     printf("----------------------\n");
-    // display_reverse(tail);
+    display_reverse(tail);
 
     free_memory(head);
     return 0;

@@ -36,6 +36,10 @@ int add_end(node_t **head, node_t **tail, void *new_var,
 int add_at(node_t **head, node_t **tail, void *new_var,
                                         int node_flag, int position);
 
+int remove_first(node_t **head, node_t **tail);
+int remove_last(node_t **head, node_t **tail);
+int remove_at(node_t **head, node_t **tail, int position);
+
 void display(node_t *head);
 void display_reverse(node_t *tail);
 
