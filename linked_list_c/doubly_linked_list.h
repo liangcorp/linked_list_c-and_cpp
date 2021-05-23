@@ -32,4 +32,9 @@ typedef struct node
     struct node *nxt_node;
 } node_t;
 
-int add_first(node_t **head, void *value, int node_flag);
+int add_first(node_t **head, node_t **tail, void *value, int node_flag);
+
+void display(node_t *head);
+void display_reverse(node_t *tail);
+
+int free_memory(node_t *head);

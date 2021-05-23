@@ -79,3 +79,4 @@ Cargo.lock
 **/*.rs.bk
 linked_list_c/single_linked_list
 main
+linked_list_c/doubly_linked_list

@@ -13,21 +13,166 @@
 #include <stdlib.h>
 #include "doubly_linked_list.h"
 
-int add_first(node_t **head, void *value, int node_flag)
+int add_first(node_t **head, node_t **tail, void *new_var, int node_flag)
 {
     int result = 0;
 
     node_t *new_node = NULL;
-    new_node = calloc(1, sizeof(node_t));
+    node_t *current_node = NULL;
 
-    new_node->pre_node = NULL;
-    new_node->nxt_node = *head;
-    *head = new_node;
+    content_t *new_content = NULL;
+
+    new_node = calloc(1, sizeof(node_t));
+    new_content = calloc(1, sizeof(content_t));
+    new_node->content = new_content;
+
+    if (node_flag == INT_FLAG)
+    {
+        new_content->i_num = *(int *)new_var;
+        new_node->node_flag = INT_FLAG;
+    }
+    else if (node_flag == FLOAT_FLAG)
+    {
+        new_content->f_num = *(float *)new_var;
+        new_node->node_flag = FLOAT_FLAG;
+    }
+    else if (node_flag == CHAR_FLAG)
+    {
+        new_content->c = *(char *)new_var;
+        new_node->node_flag = CHAR_FLAG;
+    }
+    else
+    {
+        result = -1;
+    }
+
+    if (*head == NULL)
+    {
+        new_node->pre_node = NULL;
+        new_node->nxt_node = NULL;
+        *head = new_node;
+        *tail = new_node;
+    }
+    else
+    {
+        new_node->pre_node = NULL;
+        (*head)->pre_node = new_node;
+
+        new_node->nxt_node = *head;
+        *head = new_node;
+    }
+
+    current_node = *head;
+
+    while (current_node->nxt_node != NULL)
+    {
+        current_node = current_node->nxt_node;
+
+    }
+
+    *tail = current_node;
+
+    return result;
+}
+
+void display(node_t *head)
+{
+    int i = 0;
+
+    while (head != NULL)
+    {
+        printf("%d  |  ", i);
+        if (head->node_flag == INT_FLAG)
+            printf("Integer: %d\n", head->content->i_num);
+        else if (head->node_flag == FLOAT_FLAG)
+            printf("Float: %.4f\n", head->content->f_num);
+        else if (head->node_flag == CHAR_FLAG)
+            printf("Character: %c\n", head->content->c);
+        else
+            printf("ERROR\n");
+
+        head = head->nxt_node;
+        i++;
+    }
+}
+
+void display_reverse(node_t *tail)
+{
+    int i = 0;
+    node_t *current_node = tail;
+
+    while (current_node->pre_node != NULL)
+    {
+        current_node = current_node->pre_node;
+        i++;
+    }
+
+    while (tail != NULL)
+    {
+        printf("%d  |  ", i);
+        if (tail->node_flag == INT_FLAG)
+            printf("Integer: %d\n", tail->content->i_num);
+        else if (tail->node_flag == FLOAT_FLAG)
+            printf("Float: %.4f\n", tail->content->f_num);
+        else if (tail->node_flag == CHAR_FLAG)
+            printf("Character: %c\n", tail->content->c);
+        else
+            printf("ERROR\n");
+
+        tail = tail->pre_node;
+        i--;
+    }
+}
+
+int length_of(node_t *head)
+{
+    int result = 0;
+
+    while (head != NULL)
+    {
+        head = head->nxt_node;
+        result++;
+    }
+    return result;
+}
+
+int free_memory(node_t *head)
+{
+    int result = 0;
+
+    node_t *to_be_removed = NULL;
+
+    while (head != NULL)
+    {
+        to_be_removed = head;
+        head = head->nxt_node;
+        free(to_be_removed->content);
+        free(to_be_removed);
+    }
 
     return result;
 }
 
 int main(void)
 {
+    node_t *head = NULL;
+    node_t *tail = NULL;
+
+    int i_num = 100;
+    int i_num2 = 200;
+    char c1 = 'A';
+    float f_num = 10.01;
+
+    add_first(&head, &tail, &i_num, INT_FLAG);
+    add_first(&head, &tail, &i_num2, INT_FLAG);
+    add_first(&head, &tail, &c1, CHAR_FLAG);
+    add_first(&head, &tail, &f_num, FLOAT_FLAG);
+
+
+    display(head);
+    printf("----------------------\n");
+    display_reverse(tail);
+
+    free_memory(head);
     return 0;
 }
