@@ -230,19 +230,19 @@ int remove_first(node_t **head, node_t **tail)
 
     node_t *to_be_removed = NULL;
 
+    to_be_removed = *head;
+
     if (*head == NULL && *tail == NULL)
     {
         result = -1;
     }
     else if ((*head)->nxt_node == NULL)
     {
-        to_be_removed = *head;
         *head = NULL;
         *tail = NULL;
     }
     else
     {
-
         *head = (*head)->nxt_node;
         (*head)->pre_node = NULL;
     }
@@ -344,11 +344,11 @@ int main(void)
     float f_num2 = 20.02;
 
     add_first(&head, &tail, &i_num, INT_FLAG);
-    // add_first(&head, &tail, &c1, CHAR_FLAG);
-    // add_end(&head, &tail, &f_num, FLOAT_FLAG);
-    // add_end(&head, &tail, &i_num2, INT_FLAG);
+    add_first(&head, &tail, &c1, CHAR_FLAG);
+    add_end(&head, &tail, &f_num, FLOAT_FLAG);
+    add_end(&head, &tail, &i_num2, INT_FLAG);
 
-    // add_at(&head, &tail, &f_num2, FLOAT_FLAG, 9);
+    add_at(&head, &tail, &f_num2, FLOAT_FLAG, 9);
 
     remove_first(&head, &tail);
 
