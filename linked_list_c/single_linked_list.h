@@ -29,14 +29,14 @@ typedef struct node
     struct node *nxt_node_ptr;
 } node_t;
 
-int insert_beginning(node_t **head, void *new_var, int content_flag);
-int insert_end(node_t **head, void *new_var, int content_flag);
-int insert_at(node_t **head, void *new_var, int index,
+int add_first(node_t **head, void *new_var, int content_flag);
+int add_last(node_t **head, void *new_var, int content_flag);
+int add_at(node_t **head, void *new_var, int index,
                                                 int content_flag);
 
-int delete_beginning(node_t **head);
-int delete_end(node_t **head);
-int delete_at(node_t **head, int index);
+int remove_first(node_t **head);
+int remove_last(node_t **head);
+int remove_at(node_t **head, int index);
 
 int length_of(node_t *head);
 

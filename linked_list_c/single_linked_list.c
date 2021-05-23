@@ -14,7 +14,7 @@
 #include <malloc.h>
 #include "single_linked_list.h"
 
-int insert_beginning(node_t **head, void *new_var, int content_flag)
+int add_first(node_t **head, void *new_var, int content_flag)
 {
     int result = 0;
 
@@ -76,7 +76,7 @@ int insert_beginning(node_t **head, void *new_var, int content_flag)
     return result;
 }
 
-int insert_end(node_t **head, void *new_var, int content_flag)
+int add_last(node_t **head, void *new_var, int content_flag)
 {
     int result = 0;
 
@@ -138,7 +138,7 @@ int insert_end(node_t **head, void *new_var, int content_flag)
     return result;
 }
 
-int insert_at(node_t **head, void *new_var, int index,
+int add_at(node_t **head, void *new_var, int index,
                                                 int content_flag)
 {
     int result = 0;
@@ -215,7 +215,7 @@ int insert_at(node_t **head, void *new_var, int index,
     return result;
 }
 
-int delete_beginning(node_t **head)
+int remove_first(node_t **head)
 {
     int result = 0;
     node_t *to_be_removed = NULL;
@@ -236,7 +236,7 @@ int delete_beginning(node_t **head)
     return result;
 }
 
-int delete_end(node_t **head)
+int remove_last(node_t **head)
 {
     int result = 0;
 
@@ -263,7 +263,7 @@ int delete_end(node_t **head)
     }
 }
 
-int delete_at(node_t **head, int index)
+int remove_at(node_t **head, int index)
 {
     int result = 0;
     int i = 1;
@@ -380,15 +380,15 @@ int main(void)
     char c_new2 = 'B';
     char c_new3 = 'C';
 
-    insert_beginning(&head, &i_new, INT_FLAG);
-    insert_beginning(&head, &c_new, CHAR_FLAG);
-    insert_beginning(&head, &f_new, FLOAT_FLAG);
+    add_first(&head, &i_new, INT_FLAG);
+    add_first(&head, &c_new, CHAR_FLAG);
+    add_first(&head, &f_new, FLOAT_FLAG);
 
-    // insert_end(&head, &c_new2, CHAR_FLAG);
-    insert_at(&head, &c_new3, 9, CHAR_FLAG);
-    // delete_beginning(&head);
-    // delete_end(&head);
-    delete_at(&head, 3);
+    // add_last(&head, &c_new2, CHAR_FLAG);
+    add_at(&head, &c_new3, 9, CHAR_FLAG);
+    // add_first(&head);
+    // add_last(&head);
+    remove_at(&head, 3);
 
     printf("There are %d nodes\n", length_of(head));
     display_nodes(head);
