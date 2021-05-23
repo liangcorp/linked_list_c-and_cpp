@@ -9,9 +9,6 @@
  *
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #define INT_FLAG 0
 #define FLOAT_FLAG 1
 #define CHAR_FLAG 2
@@ -33,8 +30,11 @@ typedef struct node
 } node_t;
 
 int add_first(node_t **head, node_t **tail, void *value, int node_flag);
+int add_end(node_t **head, node_t **tail, void *value, int node_flag);
 
 void display(node_t *head);
 void display_reverse(node_t *tail);
+
+int length_of(node_t *head);
 
 int free_memory(node_t *head);

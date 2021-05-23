@@ -46,7 +46,7 @@ int add_first(node_t **head, node_t **tail, void *new_var, int node_flag)
         result = -1;
     }
 
-    if (*head == NULL)
+    if (*head == NULL && *tail == NULL)
     {
         new_node->pre_node = NULL;
         new_node->nxt_node = NULL;
@@ -71,6 +71,67 @@ int add_first(node_t **head, node_t **tail, void *new_var, int node_flag)
     }
 
     *tail = current_node;
+
+    return result;
+}
+
+int add_end(node_t **head, node_t **tail, void *new_var, int node_flag)
+{
+    int result = 0;
+    node_t *new_node = NULL;
+    node_t *current_node = NULL;
+
+    content_t *new_content = NULL;
+
+    new_node = calloc(1, sizeof(node_t));
+    new_content = calloc(1, sizeof(content_t));
+    new_node->content = new_content;
+
+    if (node_flag == INT_FLAG)
+    {
+        new_content->i_num = *(int *)new_var;
+        new_node->node_flag = INT_FLAG;
+    }
+    else if (node_flag == FLOAT_FLAG)
+    {
+        new_content->f_num = *(float *)new_var;
+        new_node->node_flag = FLOAT_FLAG;
+    }
+    else if (node_flag == CHAR_FLAG)
+    {
+        new_content->c = *(char *)new_var;
+        new_node->node_flag = CHAR_FLAG;
+    }
+    else
+    {
+        result = -1;
+    }
+
+    if (*head == NULL && *tail == NULL)
+    {
+        new_node->pre_node = NULL;
+        new_node->nxt_node = NULL;
+        *head = new_node;
+        *tail = new_node;
+    }
+    else
+    {
+        new_node->nxt_node = NULL;
+        (*tail)->nxt_node = new_node;
+
+        new_node->pre_node = *tail;
+        *tail = new_node;
+    }
+
+    current_node = *tail;
+
+    while (current_node->pre_node != NULL)
+    {
+        current_node = current_node->pre_node;
+
+    }
+
+    *head = current_node;
 
     return result;
 }
@@ -164,10 +225,9 @@ int main(void)
     float f_num = 10.01;
 
     add_first(&head, &tail, &i_num, INT_FLAG);
-    add_first(&head, &tail, &i_num2, INT_FLAG);
     add_first(&head, &tail, &c1, CHAR_FLAG);
-    add_first(&head, &tail, &f_num, FLOAT_FLAG);
-
+    add_end(&head, &tail, &f_num, FLOAT_FLAG);
+    add_end(&head, &tail, &i_num2, INT_FLAG);
 
     display(head);
     printf("----------------------\n");
