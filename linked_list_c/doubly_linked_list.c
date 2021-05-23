@@ -253,6 +253,35 @@ int remove_first(node_t **head, node_t **tail)
     return result;
 }
 
+int remove_last(node_t **head, node_t **tail)
+{
+    int result = 0;
+
+    node_t *to_be_removed = NULL;
+
+    to_be_removed = *tail;
+
+    if (*head == NULL && *tail == NULL)
+    {
+        result = -1;
+    }
+    else if ((*tail)->pre_node == NULL)
+    {
+        *head = NULL;
+        *tail = NULL;
+    }
+    else
+    {
+        *tail = (*tail)->pre_node;
+        (*tail)->nxt_node = NULL;
+    }
+
+    free(to_be_removed->content);
+    free(to_be_removed);
+
+    return result;
+}
+
 void display(node_t *head)
 {
     int i = 0;
@@ -351,6 +380,7 @@ int main(void)
     add_at(&head, &tail, &f_num2, FLOAT_FLAG, 9);
 
     remove_first(&head, &tail);
+    remove_last(&head, &tail);
 
     display(head);
     printf("----------------------\n");
