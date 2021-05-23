@@ -9,7 +9,7 @@
  *
  */
 
-/* User flag to mark which element is active in the union */
+/* User flag to mark which node is active in the union */
 #define INT_FLAG 0
 #define FLOAT_FLAG 1
 #define CHAR_FLAG 2
@@ -22,24 +22,24 @@ typedef union content
     char c;
 } content_t;
 
-typedef struct element
+typedef struct node
 {
-    content_t *ele_content;
-    int ele_flag;
-    struct element *nxt_ele_ptr;
-} element_t;
+    content_t *node_content;
+    int node_flag;
+    struct node *nxt_node_ptr;
+} node_t;
 
-int insert_beginning(element_t **head, void *new_var, int content_flag);
-int insert_end(element_t **head, void *new_var, int content_flag);
-int insert_at(element_t **head, void *new_var, int index,
+int insert_beginning(node_t **head, void *new_var, int content_flag);
+int insert_end(node_t **head, void *new_var, int content_flag);
+int insert_at(node_t **head, void *new_var, int index,
                                                 int content_flag);
 
-int delete_beginning(element_t **head);
-int delete_end(element_t **head);
-int delete_at(element_t **head, int index);
+int delete_beginning(node_t **head);
+int delete_end(node_t **head);
+int delete_at(node_t **head, int index);
 
-int length_of(element_t *head);
+int length_of(node_t *head);
 
-void display_elements(element_t *head);
+void display_nodes(node_t *head);
 
-int free_memory(element_t *head);
+int free_memory(node_t *head);
