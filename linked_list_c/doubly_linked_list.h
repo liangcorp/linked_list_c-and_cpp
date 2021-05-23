@@ -29,8 +29,12 @@ typedef struct node
     struct node *nxt_node;
 } node_t;
 
-int add_first(node_t **head, node_t **tail, void *value, int node_flag);
-int add_end(node_t **head, node_t **tail, void *value, int node_flag);
+int add_first(node_t **head, node_t **tail, void *new_var,
+                                                int node_flag);
+int add_end(node_t **head, node_t **tail, void *new_var,
+                                                int node_flag);
+int add_at(node_t **head, node_t **tail, void *new_var,
+                                        int node_flag, int position);
 
 void display(node_t *head);
 void display_reverse(node_t *tail);

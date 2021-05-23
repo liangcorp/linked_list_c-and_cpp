@@ -13,7 +13,8 @@
 #include <stdlib.h>
 #include "doubly_linked_list.h"
 
-int add_first(node_t **head, node_t **tail, void *new_var, int node_flag)
+int add_first(node_t **head, node_t **tail, void *new_var,
+                                                    int node_flag)
 {
     int result = 0;
 
@@ -75,7 +76,8 @@ int add_first(node_t **head, node_t **tail, void *new_var, int node_flag)
     return result;
 }
 
-int add_end(node_t **head, node_t **tail, void *new_var, int node_flag)
+int add_end(node_t **head, node_t **tail, void *new_var,
+                                                int node_flag)
 {
     int result = 0;
     node_t *new_node = NULL;
@@ -132,6 +134,82 @@ int add_end(node_t **head, node_t **tail, void *new_var, int node_flag)
     }
 
     *head = current_node;
+
+    return result;
+}
+
+int add_at(node_t **head, node_t **tail, void *new_var,
+                                        int node_flag, int position)
+{
+    int result = 0;
+    int index = 1;
+
+    node_t *new_node = NULL;
+    node_t *pre_node = NULL;
+    node_t *current_node = NULL;
+    node_t *next_node = NULL;
+
+    content_t *new_content = NULL;
+
+    new_node = calloc(1, sizeof(node_t));
+    new_content = calloc(1, sizeof(content_t));
+
+    new_node->content = new_content;
+
+    if (node_flag == INT_FLAG)
+    {
+        new_content->i_num = *(int *)new_var;
+        new_node->node_flag = INT_FLAG;
+    }
+    else if (node_flag == FLOAT_FLAG)
+    {
+        new_content->f_num = *(float *)new_var;
+        new_node->node_flag = FLOAT_FLAG;
+    }
+    else if (node_flag == CHAR_FLAG)
+    {
+        new_content->c = *(char *)new_var;
+        new_node->node_flag = CHAR_FLAG;
+    }
+    else
+    {
+        result = -1;
+    }
+
+    if (*head == NULL && *tail == NULL)
+    {
+        new_node->pre_node = NULL;
+        new_node->nxt_node = NULL;
+        *head = new_node;
+        *tail = new_node;
+    }
+    else if (position == 0)
+    {
+        new_node->nxt_node = *head;
+        *head = new_node;
+    }
+    else
+    {
+        pre_node = *head;
+        next_node = (*head)->nxt_node;
+
+        while(index < position && pre_node->nxt_node != NULL)
+        {
+            pre_node = pre_node->nxt_node;
+            next_node = pre_node->nxt_node;
+            index++;
+        }
+
+        pre_node->nxt_node = new_node;
+
+        new_node->pre_node = pre_node;
+        new_node->nxt_node = next_node;
+
+        if (next_node == NULL)
+            new_node->nxt_node = NULL;
+        else
+            next_node->pre_node = new_node;
+    }
 
     return result;
 }
@@ -223,15 +301,18 @@ int main(void)
     int i_num2 = 200;
     char c1 = 'A';
     float f_num = 10.01;
+    float f_num2 = 20.02;
 
     add_first(&head, &tail, &i_num, INT_FLAG);
     add_first(&head, &tail, &c1, CHAR_FLAG);
     add_end(&head, &tail, &f_num, FLOAT_FLAG);
     add_end(&head, &tail, &i_num2, INT_FLAG);
 
+    add_at(&head, &tail, &f_num2, FLOAT_FLAG, 9);
+
     display(head);
     printf("----------------------\n");
-    display_reverse(tail);
+    // display_reverse(tail);
 
     free_memory(head);
     return 0;
