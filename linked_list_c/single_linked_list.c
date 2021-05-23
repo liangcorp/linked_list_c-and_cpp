@@ -157,28 +157,16 @@ int add_at(node_t **head, void *new_var, int index,
     {
         new_content->i_num = *(int *)new_var;
         new_node->node_flag = INT_FLAG;
-
-        #ifdef DEBUG
-            printf("Integer %d\n", new_content->i_num);
-        #endif
     }
     else if (content_flag == FLOAT_FLAG)
     {
         new_content->f_num = *(float *)new_var;
         new_node->node_flag = FLOAT_FLAG;
-
-        #ifdef DEBUG
-            printf("Float %d\n", new_content->f_num);
-        #endif
     }
     else if (content_flag == CHAR_FLAG)
     {
         new_content->c = *(char *)new_var;
         new_node->node_flag = CHAR_FLAG;
-
-        #ifdef DEBUG
-            printf("Character %d\n", new_content->c);
-        #endif
     }
     else
     {
