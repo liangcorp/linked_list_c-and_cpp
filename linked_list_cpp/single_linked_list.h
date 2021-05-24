@@ -17,8 +17,6 @@ template <class T>
 class SingleLinkedList
 {
     private:
-        T content;
-
         typedef struct node
         {
             T *content;
