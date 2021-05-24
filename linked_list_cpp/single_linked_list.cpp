@@ -63,6 +63,12 @@ SingleLinkedList::SingleLinkedList(void *new_var, int node_flag)
     this -> node_flag = node_flag;
 }
 
+SingleLinkedList::~SingleLinkedList()
+{
+    // Destructor to free up memory
+    this -> free_memory();
+}
+
 int SingleLinkedList::no_of_nodes = 1;
 
 
@@ -119,6 +125,6 @@ int main(void)
 
     cout << "First element is " << *(int *)linked_list.get_element(0) << endl;
 
-    linked_list.free_memory();
+    // linked_list.free_memory();
     return 0;
 }

@@ -39,6 +39,7 @@ class SingleLinkedList
         SingleLinkedList();
         SingleLinkedList(int node_flag);
         SingleLinkedList(void *new_var, int node_flag);
+        ~SingleLinkedList();
 
         int add_first(node_t **head);
         int add_last(node_t **head);
