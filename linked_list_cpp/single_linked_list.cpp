@@ -118,6 +118,45 @@ int SingleLinkedList<T>::add_last(T new_var, int node_flag)
 }
 
 template <typename T>
+int SingleLinkedList<T>::add_at(T new_var, int node_flag, int position)
+{
+    int result = 0;
+    int i = 0;
+
+    node_t *new_node = nullptr;
+    node_t *current_node = nullptr;
+    node_t *prev_node = nullptr;
+
+    if (this->no_of_nodes < position)
+    {
+        cout << "Position doesn't exist" << endl;
+        result = -1;
+    }
+    else
+    {
+        new_node = (node_t *)calloc(1, sizeof(node_t));
+        new_node->content = (T *)calloc(1, sizeof(T));
+
+        *(new_node->content) = new_var;
+
+        current_node = this->head;
+
+        while (current_node->next_node_ptr != nullptr && i < position)
+        {
+            prev_node = current_node;
+            current_node = current_node->next_node_ptr;
+            i++;
+        }
+        prev_node->next_node_ptr = new_node;
+        new_node->next_node_ptr = current_node;
+
+        SingleLinkedList::no_of_nodes++;
+    }
+
+    return result;
+}
+
+template <typename T>
 int SingleLinkedList<T>::get_length()
 {
     return SingleLinkedList::no_of_nodes;
@@ -162,7 +201,7 @@ void SingleLinkedList<T>::display_nodes()
 
     for (i = 0; i < this->no_of_nodes; i++)
     {
-        cout << *(current_node->content) << endl;
+        cout << i << "  |  " << *(current_node->content) << endl;
         current_node = current_node->next_node_ptr;
     }
 }
@@ -193,7 +232,8 @@ int main(void)
     SingleLinkedList<int> linked_list;
     linked_list.add_first(100, INT_FLAG);
     linked_list.add_last(1000, INT_FLAG);
-
+    linked_list.add_last(10, INT_FLAG);
+    linked_list.add_at(10000, INT_FLAG, 2);
     cout << "No of nodes is " << linked_list.get_length() << endl;
 
     linked_list.display_nodes();
