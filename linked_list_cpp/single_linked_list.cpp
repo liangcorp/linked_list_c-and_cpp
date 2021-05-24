@@ -75,16 +75,24 @@ int SingleLinkedList<T>::add_first(T new_var, int node_flag)
     int result = 0;
     node_t *new_node = nullptr;
 
-    new_node = (node_t *)calloc(1, sizeof(node_t));
-    new_node->content = (T *)calloc(1, sizeof(T));
+    if (this->node_flag != node_flag)
+    {
+        cout << "Incompatible variable type. "
+                << "Variable not added" << endl;
+        result = -1;
+    }
+    else
+    {
+        new_node = (node_t *)calloc(1, sizeof(node_t));
+        new_node->content = (T *)calloc(1, sizeof(T));
 
-    *(new_node->content) = new_var;
+        *(new_node->content) = new_var;
 
-    new_node->next_node_ptr = this->head;
-    this->head = new_node;
+        new_node->next_node_ptr = this->head;
+        this->head = new_node;
 
-    SingleLinkedList::no_of_nodes++;
-
+        SingleLinkedList::no_of_nodes++;
+    }
     return result;
 }
 
@@ -161,7 +169,7 @@ int main(void)
 {
     int i_num = 10;
     SingleLinkedList<int> linked_list(10, INT_FLAG);
-    // linked_list.add_first(100, INT_FLAG);
+    linked_list.add_first('C', CHAR_FLAG);
     // linked_list.add_first(1000, INT_FLAG);
 
     cout << "No of nodes is " << linked_list.get_length() << endl;

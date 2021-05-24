@@ -36,17 +36,17 @@ class SingleLinkedList
         ~SingleLinkedList();
 
         int add_first(T new_var, int node_flag);
-        int add_last(node_t **head);
-        int add_at(node_t **head, int position);
+        int add_last(T new_var, int node_flag);                // @todo
+        int add_at(T new_var, int node_flag, int position);    // @todo
 
-        int delete_first(node_t **head);
-        int delete_last(node_t **head);
-        int delete_at(node_t **head, int position);
+        int delete_first(node_t **head);            // @todo
+        int delete_last(node_t **head);             // @todo
+        int delete_at(node_t **head, int position); // @todo
 
         T get_element(int position);
 
-        int sort_des(node_t **head);
-        int sort_aes(node_t **head);
+        int sort_des(node_t **head);                // @todo
+        int sort_aes(node_t **head);                // @todo
 
         static int get_length();
 
