@@ -36,7 +36,7 @@ class SingleLinkedList
         ~SingleLinkedList();
 
         int add_first(T new_var, int node_flag);
-        int add_last(T new_var, int node_flag);                // @todo
+        int add_last(T new_var, int node_flag);
         int add_at(T new_var, int node_flag, int position);    // @todo
 
         int delete_first(node_t **head);            // @todo

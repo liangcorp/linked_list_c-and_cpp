@@ -97,6 +97,38 @@ int SingleLinkedList<T>::add_first(T new_var, int node_flag)
 }
 
 template <typename T>
+int SingleLinkedList<T>::add_last(T new_var, int node_flag)
+{
+    int result = 0;
+
+    node_t *last_node = nullptr;
+    node_t *new_node = nullptr;
+
+    if (this->node_flag != node_flag)
+    {
+        result = -1;
+    }
+    else
+    {
+        new_node = (node_t *)calloc(1, sizeof(node_t));
+        new_node->content = (T *)calloc(1, sizeof(T));
+        *(new_node->content) = new_var;
+
+        last_node = this->head;
+
+        while (last_node->next_node_ptr != NULL)
+        {
+            last_node = last_node->next_node_ptr;
+        }
+        last_node->next_node_ptr = new_node;
+        new_node->next_node_ptr = nullptr;
+
+        SingleLinkedList::no_of_nodes++;
+    }
+    return result;
+}
+
+template <typename T>
 int SingleLinkedList<T>::get_length()
 {
     return SingleLinkedList::no_of_nodes;
@@ -169,8 +201,8 @@ int main(void)
 {
     int i_num = 10;
     SingleLinkedList<int> linked_list(10, INT_FLAG);
-    linked_list.add_first('C', CHAR_FLAG);
-    // linked_list.add_first(1000, INT_FLAG);
+    linked_list.add_first(100, INT_FLAG);
+    linked_list.add_last(1000, INT_FLAG);
 
     cout << "No of nodes is " << linked_list.get_length() << endl;
 
