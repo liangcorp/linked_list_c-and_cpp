@@ -36,11 +36,11 @@ class SingleLinkedList
 
         int add_first(T new_var, int node_flag);
         int add_last(T new_var, int node_flag);
-        int add_at(T new_var, int node_flag, int position);
+        int insert_at(T new_var, int node_flag, int position);
 
-        int delete_first(node_t **head);            // @todo
-        int delete_last(node_t **head);             // @todo
-        int delete_at(node_t **head, int position); // @todo
+        int delete_first();             // @todo
+        int delete_last();              // @todo
+        int delete_at(int position);    // @todo
 
         T get_element(int position);
 
