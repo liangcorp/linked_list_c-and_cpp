@@ -17,33 +17,9 @@ using namespace std;
 template <typename T>
 SingleLinkedList<T>::SingleLinkedList()
 {
-    this->head = (node_t *)calloc(1, sizeof(node_t));
-    this->head->content = (T *)calloc(1, sizeof(T));
-
-    head->next_node_ptr = nullptr;
-    *(head->content) = 0;
-
-    this->node_flag = INT_FLAG;
-}
-
-template <typename T>
-SingleLinkedList<T>::SingleLinkedList(int node_flag)
-{
-    this->head = (node_t *)calloc(1, sizeof(node_t));
-    this->head->content = (T *)calloc(1, sizeof(T));
-
-    head->next_node_ptr = nullptr;
-
-    if (node_flag == INT_FLAG)
-        *(head->content) = 0;
-    else if (node_flag == FLOAT_FLAG)
-        *(head->content) = 0.0;
-    else if (node_flag == CHAR_FLAG)
-        *(head->content) = 'A';
-    else
-        perror("Invalid content flag\n");
-
-    this->node_flag = node_flag;
+    this->head = nullptr;
+    this->node_flag = -1;
+    SingleLinkedList::no_of_nodes = 0;
 }
 
 template <typename T>
@@ -57,6 +33,8 @@ SingleLinkedList<T>::SingleLinkedList(T new_var, int node_flag)
     *(this->head->content) = new_var;
 
     this->node_flag = node_flag;
+
+    SingleLinkedList::no_of_nodes = 1;
 }
 
 template <typename T>
@@ -67,7 +45,7 @@ SingleLinkedList<T>::~SingleLinkedList()
 }
 
 template <typename T>
-int SingleLinkedList<T>::no_of_nodes = 1;
+int SingleLinkedList<T>::no_of_nodes = 0;
 
 template <typename T>
 int SingleLinkedList<T>::add_first(T new_var, int node_flag)
@@ -75,7 +53,7 @@ int SingleLinkedList<T>::add_first(T new_var, int node_flag)
     int result = 0;
     node_t *new_node = nullptr;
 
-    if (this->node_flag != node_flag)
+    if (this->node_flag != node_flag && this->no_of_nodes != 0)
     {
         cout << "Incompatible variable type. "
                 << "Variable not added" << endl;
@@ -83,6 +61,9 @@ int SingleLinkedList<T>::add_first(T new_var, int node_flag)
     }
     else
     {
+        if (this->no_of_nodes == 0)
+            this->node_flag = node_flag;
+
         new_node = (node_t *)calloc(1, sizeof(node_t));
         new_node->content = (T *)calloc(1, sizeof(T));
 
@@ -104,7 +85,7 @@ int SingleLinkedList<T>::add_last(T new_var, int node_flag)
     node_t *last_node = nullptr;
     node_t *new_node = nullptr;
 
-    if (this->node_flag != node_flag)
+    if (this->node_flag != node_flag && this->no_of_nodes != 0)
     {
         result = -1;
     }
@@ -114,13 +95,21 @@ int SingleLinkedList<T>::add_last(T new_var, int node_flag)
         new_node->content = (T *)calloc(1, sizeof(T));
         *(new_node->content) = new_var;
 
-        last_node = this->head;
-
-        while (last_node->next_node_ptr != NULL)
+        if (this->no_of_nodes == 0)
         {
-            last_node = last_node->next_node_ptr;
+            this->node_flag = node_flag;
+            this->head = new_node;
         }
-        last_node->next_node_ptr = new_node;
+        else
+        {
+            last_node = this->head;
+
+            while (last_node->next_node_ptr != NULL)
+            {
+                last_node = last_node->next_node_ptr;
+            }
+            last_node->next_node_ptr = new_node;
+        }
         new_node->next_node_ptr = nullptr;
 
         SingleLinkedList::no_of_nodes++;
@@ -200,7 +189,8 @@ int SingleLinkedList<T>::free_memory()
 int main(void)
 {
     int i_num = 10;
-    SingleLinkedList<int> linked_list(10, INT_FLAG);
+    // SingleLinkedList<int> linked_list(10, INT_FLAG);
+    SingleLinkedList<int> linked_list;
     linked_list.add_first(100, INT_FLAG);
     linked_list.add_last(1000, INT_FLAG);
 

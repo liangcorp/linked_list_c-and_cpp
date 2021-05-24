@@ -31,7 +31,6 @@ class SingleLinkedList
 
     public:
         SingleLinkedList();
-        SingleLinkedList(int node_flag);
         SingleLinkedList(T new_var, int node_flag);
         ~SingleLinkedList();
 
