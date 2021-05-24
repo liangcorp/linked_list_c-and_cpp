@@ -29,6 +29,8 @@ class SingleLinkedList
             struct node *next_node_ptr;
         } node_t;
 
+        node_t head;
+
         int node_flag;
 
         static int no_of_nodes;
@@ -36,6 +38,7 @@ class SingleLinkedList
     public:
         SingleLinkedList();
         SingleLinkedList(int node_flag);
+        SingleLinkedList(void *new_var, int node_flag);
 
         int add_first(node_t **head);
         int add_last(node_t **head);
@@ -45,7 +48,7 @@ class SingleLinkedList
         int delete_last(node_t **head);
         int delete_at(node_t **head, int position);
 
-        int get_element(node_t **head, int position);
+        void * get_element(int position);
 
         int sort_des(node_t **head);
         int sort_aes(node_t **head);
