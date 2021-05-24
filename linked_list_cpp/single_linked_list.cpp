@@ -14,85 +14,93 @@
 
 using namespace std;
 
-SingleLinkedList::SingleLinkedList()
+template <typename T>
+SingleLinkedList<T>::SingleLinkedList()
 {
     this -> head = (node_t *)calloc(1, sizeof(node_t));
-    this -> head->content = (content_t *)calloc(1, sizeof(content_t));
+    this -> head->content = (T *)calloc(1, sizeof(T));
 
     head->next_node_ptr = NULL;
-    head->content->i_num = 0;
+    *(head->content) = 0;
 
     this -> node_flag = INT_FLAG;
 }
 
-SingleLinkedList::SingleLinkedList(int node_flag)
+template <typename T>
+SingleLinkedList<T>::SingleLinkedList(int node_flag)
 {
     this -> head = (node_t *)calloc(1, sizeof(node_t));
-    this -> head->content = (content_t *)calloc(1, sizeof(content_t));
+    this -> head->content = (T *)calloc(1, sizeof(T));
 
     head->next_node_ptr = NULL;
 
     if (node_flag == INT_FLAG)
-        head->content->i_num = 0;
+        *(head->content) = 0;
     else if (node_flag == FLOAT_FLAG)
-        head->content->f_num = 0.0;
+        *(head->content) = 0.0;
     else if (node_flag == CHAR_FLAG)
-        head->content->c == 'A';
+        *(head->content) = 'A';
     else
         perror("Invalid content flag\n");
 
     this -> node_flag = node_flag;
 }
 
-SingleLinkedList::SingleLinkedList(void *new_var, int node_flag)
+template <typename T>
+SingleLinkedList<T>::SingleLinkedList(T new_var, int node_flag)
 {
     this -> head = (node_t *)calloc(1, sizeof(node_t));
-    this -> head->content = (content_t *)calloc(1, sizeof(content_t));
+    this -> head->content = (T *)calloc(1, sizeof(T));
 
     head->next_node_ptr = NULL;
 
     if (node_flag == INT_FLAG)
-        head->content->i_num = *(int *)new_var;
+        *(head->content) = new_var;
     else if (node_flag == FLOAT_FLAG)
-        head->content->f_num = *(float *)new_var;
+        *(head->content) = new_var;
     else if (node_flag == CHAR_FLAG)
-        head->content->c == *(char *)new_var;
+        *(head->content) = new_var;
     else
         perror("Invalid content flag\n");
 
     this -> node_flag = node_flag;
 }
 
-SingleLinkedList::~SingleLinkedList()
+template <typename T>
+SingleLinkedList<T>::~SingleLinkedList()
 {
     // Destructor to free up memory
     this -> free_memory();
 }
 
-int SingleLinkedList::no_of_nodes = 1;
+template <typename T>
+int SingleLinkedList<T>::no_of_nodes = 1;
 
-
-int SingleLinkedList::get_length()
+template <typename T>
+int SingleLinkedList<T>::get_length()
 {
     return SingleLinkedList::no_of_nodes;
 }
 
-int SingleLinkedList::get_node_flag()
+template <typename T>
+int SingleLinkedList<T>::get_node_flag()
 {
     return node_flag;
 }
 
-void * SingleLinkedList::get_element(int position)
+template <typename T>
+T SingleLinkedList<T>::get_element(int position)
 {
-    void * result = NULL;
+    T result;
 
     if (this -> node_flag == INT_FLAG)
-        result = &(head->content->i_num);
+        result = *(head->content);
 
     return result;
 }
 
-int SingleLinkedList::free_memory()
+template <typename T>
+int SingleLinkedList<T>::free_memory()
 {
     int result = 0;
 
@@ -119,11 +127,11 @@ int SingleLinkedList::free_memory()
 int main(void)
 {
     int i_num = 10;
-    SingleLinkedList linked_list(&i_num, 0);
+    SingleLinkedList<int> linked_list(i_num, 0);
 
     cout << "No of nodes is " << linked_list.get_length() << endl;
 
-    cout << "First element is " << *(int *)linked_list.get_element(0) << endl;
+    cout << "First element is " << linked_list.get_element(0) << endl;
 
     // linked_list.free_memory();
     return 0;

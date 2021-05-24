@@ -13,19 +13,15 @@
 #define FLOAT_FLAG 1
 #define CHAR_FLAG 2
 
+template <class T>
 class SingleLinkedList
 {
     private:
-        typedef union content
-        {
-            int i_num;
-            float f_num;
-            char c;
-        } content_t;
+        T content;
 
         typedef struct node
         {
-            content_t *content;
+            T *content;
             struct node *next_node_ptr;
         } node_t;
 
@@ -38,7 +34,7 @@ class SingleLinkedList
     public:
         SingleLinkedList();
         SingleLinkedList(int node_flag);
-        SingleLinkedList(void *new_var, int node_flag);
+        SingleLinkedList(T new_var, int node_flag);
         ~SingleLinkedList();
 
         int add_first(node_t **head);
@@ -49,7 +45,7 @@ class SingleLinkedList
         int delete_last(node_t **head);
         int delete_at(node_t **head, int position);
 
-        void * get_element(int position);
+        T get_element(int position);
 
         int sort_des(node_t **head);
         int sort_aes(node_t **head);
