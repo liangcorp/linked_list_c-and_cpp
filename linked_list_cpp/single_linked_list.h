@@ -16,16 +16,27 @@
 class SingleLinkedList
 {
     private:
+        typedef union content
+        {
+            int i_num;
+            float f_num;
+            char c;
+        } content_t;
+
         typedef struct node
         {
-            int num;
+            content_t content;
             struct node *next_node_ptr;
         } node_t;
 
-        static int no_of_element;
-        static int node_flag;
+        int node_flag;
+
+        static int no_of_nodes;
 
     public:
+        SingleLinkedList();
+        SingleLinkedList(int node_flag);
+
         int add_first(node_t **head);
         int add_last(node_t **head);
         int add_at(node_t **head, int position);
@@ -39,9 +50,9 @@ class SingleLinkedList
         int sort_des(node_t **head);
         int sort_aes(node_t **head);
 
-        static int length_of();
+        static int get_length();
+
+        int get_node_flag();
 
         int free_memory(node_t **head);
-
-        SingleLinkedList();
 };
