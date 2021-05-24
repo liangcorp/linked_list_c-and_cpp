@@ -25,7 +25,7 @@ class SingleLinkedList
 
         typedef struct node
         {
-            content_t content;
+            content_t *content;
             struct node *next_node_ptr;
         } node_t;
 

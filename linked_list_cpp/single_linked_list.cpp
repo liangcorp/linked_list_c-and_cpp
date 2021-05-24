@@ -17,9 +17,10 @@ using namespace std;
 SingleLinkedList::SingleLinkedList()
 {
     this -> head = (node_t *)calloc(1, sizeof(node_t));
+    this -> head->content = (content_t *)calloc(1, sizeof(content_t));
 
     head->next_node_ptr = NULL;
-    head->content.i_num = 0;
+    head->content->i_num = 0;
 
     this -> node_flag = INT_FLAG;
 }
@@ -27,14 +28,16 @@ SingleLinkedList::SingleLinkedList()
 SingleLinkedList::SingleLinkedList(int node_flag)
 {
     this -> head = (node_t *)calloc(1, sizeof(node_t));
+    this -> head->content = (content_t *)calloc(1, sizeof(content_t));
+
     head->next_node_ptr = NULL;
 
     if (node_flag == INT_FLAG)
-        head->content.i_num = 0;
+        head->content->i_num = 0;
     else if (node_flag == FLOAT_FLAG)
-        head->content.f_num = 0.0;
+        head->content->f_num = 0.0;
     else if (node_flag == CHAR_FLAG)
-        head->content.c == 'A';
+        head->content->c == 'A';
     else
         perror("Invalid content flag\n");
 
@@ -44,15 +47,16 @@ SingleLinkedList::SingleLinkedList(int node_flag)
 SingleLinkedList::SingleLinkedList(void *new_var, int node_flag)
 {
     this -> head = (node_t *)calloc(1, sizeof(node_t));
+    this -> head->content = (content_t *)calloc(1, sizeof(content_t));
 
     head->next_node_ptr = NULL;
 
     if (node_flag == INT_FLAG)
-        head->content.i_num = *(int *)new_var;
+        head->content->i_num = *(int *)new_var;
     else if (node_flag == FLOAT_FLAG)
-        head->content.f_num = *(float *)new_var;
+        head->content->f_num = *(float *)new_var;
     else if (node_flag == CHAR_FLAG)
-        head->content.c == *(char *)new_var;
+        head->content->c == *(char *)new_var;
     else
         perror("Invalid content flag\n");
 
@@ -77,7 +81,7 @@ void * SingleLinkedList::get_element(int position)
     void * result = NULL;
 
     if (this -> node_flag == INT_FLAG)
-        result = &(head->content.i_num);
+        result = &(head->content->i_num);
 
     return result;
 }
@@ -90,6 +94,7 @@ int SingleLinkedList::free_memory()
 
     if (this -> no_of_nodes <= 1)
     {
+        free(this -> head->content);
         free(this -> head);
     }
     else
@@ -98,6 +103,7 @@ int SingleLinkedList::free_memory()
         {
             to_be_freed = this -> head;
             this -> head = this -> head->next_node_ptr;
+            free(to_be_freed->content);
             free(to_be_freed);
         }
     }
