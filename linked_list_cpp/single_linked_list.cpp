@@ -17,20 +17,20 @@ using namespace std;
 template <typename T>
 SingleLinkedList<T>::SingleLinkedList()
 {
-    this -> head = (node_t *)calloc(1, sizeof(node_t));
-    this -> head->content = (T *)calloc(1, sizeof(T));
+    this->head = (node_t *)calloc(1, sizeof(node_t));
+    this->head->content = (T *)calloc(1, sizeof(T));
 
     head->next_node_ptr = nullptr;
     *(head->content) = 0;
 
-    this -> node_flag = INT_FLAG;
+    this->node_flag = INT_FLAG;
 }
 
 template <typename T>
 SingleLinkedList<T>::SingleLinkedList(int node_flag)
 {
-    this -> head = (node_t *)calloc(1, sizeof(node_t));
-    this -> head->content = (T *)calloc(1, sizeof(T));
+    this->head = (node_t *)calloc(1, sizeof(node_t));
+    this->head->content = (T *)calloc(1, sizeof(T));
 
     head->next_node_ptr = nullptr;
 
@@ -43,27 +43,27 @@ SingleLinkedList<T>::SingleLinkedList(int node_flag)
     else
         perror("Invalid content flag\n");
 
-    this -> node_flag = node_flag;
+    this->node_flag = node_flag;
 }
 
 template <typename T>
 SingleLinkedList<T>::SingleLinkedList(T new_var, int node_flag)
 {
-    this -> head = (node_t *)calloc(1, sizeof(node_t));
-    this -> head->content = (T *)calloc(1, sizeof(T));
+    this->head = (node_t *)calloc(1, sizeof(node_t));
+    this->head->content = (T *)calloc(1, sizeof(T));
 
-    head->next_node_ptr = nullptr;
+    this->head->next_node_ptr = nullptr;
 
-    *(head->content) = new_var;
+    *(this->head->content) = new_var;
 
-    this -> node_flag = node_flag;
+    this->node_flag = node_flag;
 }
 
 template <typename T>
 SingleLinkedList<T>::~SingleLinkedList()
 {
     // Destructor to free up memory
-    this -> free_memory();
+    this->free_memory();
 }
 
 template <typename T>
@@ -80,7 +80,7 @@ int SingleLinkedList<T>::add_first(T new_var, int node_flag)
 
     *(new_node->content) = new_var;
 
-    new_node->next_node_ptr = this -> head;
+    new_node->next_node_ptr = this->head;
     this->head = new_node;
 
     SingleLinkedList::no_of_nodes++;
@@ -107,9 +107,9 @@ T SingleLinkedList<T>::get_element(int position)
     node_t *current_node = nullptr;
     int i = 1;
 
-    if (this -> no_of_nodes > position)
+    if (this->no_of_nodes > position)
     {
-        current_node = this -> head;
+        current_node = this->head;
         for (i = 1; i < position; i++)
         {
             current_node = current_node->next_node_ptr;
@@ -128,10 +128,9 @@ template <typename T>
 void SingleLinkedList<T>::display_nodes()
 {
     node_t *current_node = nullptr;
-    current_node = this -> head;
+    current_node = this->head;
     int i = 0;
 
-    // while (current_node->next_node_ptr != nullptr)
     for (i = 0; i < this->no_of_nodes; i++)
     {
         cout << *(current_node->content) << endl;
@@ -143,24 +142,18 @@ template <typename T>
 int SingleLinkedList<T>::free_memory()
 {
     int result = 0;
+    int i = 0;
 
     node_t *to_be_freed = nullptr;
 
-    if (this -> no_of_nodes <= 1)
+    for (i = 0; i < this->no_of_nodes; i++)
     {
-        free(this -> head->content);
-        free(this -> head);
+        to_be_freed = this->head;
+        this->head = this->head->next_node_ptr;
+        free(to_be_freed->content);
+        free(to_be_freed);
     }
-    else
-    {
-        while (this -> head->next_node_ptr != nullptr)
-        {
-            to_be_freed = this -> head;
-            this -> head = this -> head->next_node_ptr;
-            free(to_be_freed->content);
-            free(to_be_freed);
-        }
-    }
+
     return result;
 }
 
@@ -168,15 +161,15 @@ int main(void)
 {
     int i_num = 10;
     SingleLinkedList<int> linked_list(10, INT_FLAG);
-    linked_list.add_first(100, INT_FLAG);
-    linked_list.add_first(1000, INT_FLAG);
+    // linked_list.add_first(100, INT_FLAG);
+    // linked_list.add_first(1000, INT_FLAG);
 
     cout << "No of nodes is " << linked_list.get_length() << endl;
 
     linked_list.display_nodes();
 
-    cout << "First element is " << linked_list.get_element(0) << endl;
-    cout << "Second element is " << linked_list.get_element(1) << endl;
+    // cout << "First element is " << linked_list.get_element(0) << endl;
+    // cout << "Second element is " << linked_list.get_element(1) << endl;
 
     return 0;
 }
