@@ -29,7 +29,7 @@ class SingleLinkedList
             struct node *next_node_ptr;
         } node_t;
 
-        node_t head;
+        node_t *head;
 
         int node_flag;
 
@@ -57,5 +57,5 @@ class SingleLinkedList
 
         int get_node_flag();
 
-        int free_memory(node_t **head);
+        int free_memory();
 };
