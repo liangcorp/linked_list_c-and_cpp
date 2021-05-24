@@ -40,12 +40,12 @@ class SingleLinkedList
 
         int delete_first();
         int delete_last();
-        int delete_at(int position);    // @todo
+        int delete_at(int position);
 
         T get_element(int position);
 
-        int sort_des(node_t **head);                // @todo
-        int sort_aes(node_t **head);                // @todo
+        int sort_des();                // @todo
+        int sort_aes();                // @todo
 
         static int get_length();
 

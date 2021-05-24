@@ -118,7 +118,8 @@ int SingleLinkedList<T>::add_last(T new_var, int node_flag)
 }
 
 template <typename T>
-int SingleLinkedList<T>::insert_at(T new_var, int node_flag, int position)
+int SingleLinkedList<T>::insert_at(T new_var, int node_flag,
+                                                int position)
 {
     int result = 0;
     int i = 0;
@@ -137,7 +138,8 @@ int SingleLinkedList<T>::insert_at(T new_var, int node_flag, int position)
     else if (this->node_flag != node_flag)
     {
         #ifdef DEBUG
-            cout << "Variable flag is different from linked list" << endl;
+            cout << "Variable flag is different from linked list"
+                    << endl;
         #endif
         result = -1;
     }
@@ -302,6 +304,82 @@ int SingleLinkedList<T>::delete_at(int position)
 }
 
 template <typename T>
+int SingleLinkedList<T>::sort_aes()
+{
+    int i = 0;
+    int result = 0;
+
+    T temp = 0;
+
+    node_t *current_node = nullptr;
+
+    if (this->head == nullptr)
+    {
+        result = -1;
+    }
+
+    current_node = this->head;
+
+    for (i = 0; i < this->no_of_nodes; i++)
+    {
+        while (current_node->next_node_ptr != nullptr)
+        {
+            if (*(current_node->content) >
+                        *(current_node->next_node_ptr->content))
+            {
+                temp = *(current_node->content);
+                *(current_node->content) =
+                        *(current_node->next_node_ptr->content);
+                *(current_node->next_node_ptr->content) = temp;
+            }
+
+            current_node = current_node->next_node_ptr;
+        }
+        current_node = this->head;
+    }
+
+    return result;
+}
+
+template <typename T>
+int SingleLinkedList<T>::sort_des()
+{
+    int i = 0;
+    int result = 0;
+
+    T temp = 0;
+
+    node_t *current_node = nullptr;
+
+    if (this->head == nullptr)
+    {
+        result = -1;
+    }
+
+    current_node = this->head;
+
+    for (i = 0; i < this->no_of_nodes; i++)
+    {
+        while (current_node->next_node_ptr != nullptr)
+        {
+            if (*(current_node->content) <
+                            *(current_node->next_node_ptr->content))
+            {
+                temp = *(current_node->content);
+                *(current_node->content) =
+                            *(current_node->next_node_ptr->content);
+                *(current_node->next_node_ptr->content) = temp;
+            }
+
+            current_node = current_node->next_node_ptr;
+        }
+        current_node = this->head;
+    }
+
+    return result;
+}
+
+template <typename T>
 int SingleLinkedList<T>::get_length()
 {
     return SingleLinkedList::no_of_nodes;
@@ -318,12 +396,12 @@ T SingleLinkedList<T>::get_element(int position)
 {
     T result;
     node_t *current_node = nullptr;
-    int i = 1;
+    int i = 0;
 
     if (this->no_of_nodes > position)
     {
         current_node = this->head;
-        for (i = 1; i < position; i++)
+        for (i = 0; i < position; i++)
         {
             current_node = current_node->next_node_ptr;
         }
@@ -378,16 +456,24 @@ int main(void)
     linked_list.add_first(100, INT_FLAG);
     linked_list.add_last(1000, INT_FLAG);
     linked_list.add_last(10, INT_FLAG);
+    linked_list.add_last(10, INT_FLAG);
     linked_list.insert_at(10000, INT_FLAG, 1);
+    linked_list.insert_at(2, INT_FLAG, 3);
+    linked_list.insert_at(166, INT_FLAG, 2);
     // linked_list.delete_first();
     // linked_list.delete_last();
-    linked_list.delete_at(3);
+    // linked_list.delete_at(3);
+    linked_list.sort_aes();
+    linked_list.sort_des();
+
     cout << "No of nodes is " << linked_list.get_length() << endl;
 
     linked_list.display_nodes();
 
-    // cout << "First element is " << linked_list.get_element(0) << endl;
-    // cout << "Second element is " << linked_list.get_element(1) << endl;
+    cout << "First element is " << linked_list.get_element(0)
+                                                            << endl;
+    cout << "Second element is " << linked_list.get_element(1)
+                                                            << endl;
 
     return 0;
 }
