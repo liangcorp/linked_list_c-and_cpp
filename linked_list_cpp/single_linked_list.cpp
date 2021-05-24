@@ -247,6 +247,61 @@ int SingleLinkedList<T>::delete_last()
 }
 
 template <typename T>
+int SingleLinkedList<T>::delete_at(int position)
+{
+    int result = 0;
+    int i = 0;
+
+    node_t *prev_node = nullptr;
+    node_t *to_be_removed = nullptr;
+    node_t *next_node = nullptr;
+
+    if (this->head == nullptr)
+    {
+        #ifdef DEBUG
+            cout << "Empty linked list" << endl;
+        #endif
+        result = -1;
+    }
+    else if (position == 0)
+    {
+        to_be_removed = this->head;
+        this->head = this->head->next_node_ptr;
+    }
+    else if (position > SingleLinkedList::no_of_nodes)
+    {
+        #ifdef DEBUG
+            cout << "Not enough nodes" << endl;
+        #endif
+        result = -1;
+    }
+    else if (this->head->next_node_ptr == nullptr)
+    {
+        to_be_removed = this->head;
+    }
+    else
+    {
+        to_be_removed = this->head;
+        for (i = 0; i < position; i++)
+        {
+            prev_node = to_be_removed;
+            to_be_removed = to_be_removed->next_node_ptr;
+            next_node = to_be_removed->next_node_ptr;
+        }
+        prev_node->next_node_ptr = to_be_removed->next_node_ptr;
+    }
+
+    if (result != -1)
+    {
+        free(to_be_removed->content);
+        free(to_be_removed);
+        SingleLinkedList::no_of_nodes--;
+    }
+
+    return result;
+}
+
+template <typename T>
 int SingleLinkedList<T>::get_length()
 {
     return SingleLinkedList::no_of_nodes;
@@ -324,8 +379,9 @@ int main(void)
     linked_list.add_last(1000, INT_FLAG);
     linked_list.add_last(10, INT_FLAG);
     linked_list.insert_at(10000, INT_FLAG, 1);
-    linked_list.delete_first();
-    linked_list.delete_last();
+    // linked_list.delete_first();
+    // linked_list.delete_last();
+    linked_list.delete_at(3);
     cout << "No of nodes is " << linked_list.get_length() << endl;
 
     linked_list.display_nodes();
