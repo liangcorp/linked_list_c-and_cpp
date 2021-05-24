@@ -129,8 +129,29 @@ int SingleLinkedList<T>::add_at(T new_var, int node_flag, int position)
 
     if (this->no_of_nodes < position)
     {
-        cout << "Position doesn't exist" << endl;
+        #ifdef DEBUG
+            cout << "Position doesn't exist" << endl;
+        #endif
         result = -1;
+    }
+    else if (this->node_flag != node_flag)
+    {
+        #ifdef DEBUG
+            cout << "Variable flag is different from linked list" << endl;
+        #endif
+        result = -1;
+    }
+    else if (position == 0)
+    {
+        new_node = (node_t *)calloc(1, sizeof(node_t));
+        new_node->content = (T *)calloc(1, sizeof(T));
+
+        *(new_node->content) = new_var;
+
+        new_node->next_node_ptr = this->head;
+        this->head = new_node;
+
+        SingleLinkedList::no_of_nodes++;
     }
     else
     {
@@ -233,7 +254,7 @@ int main(void)
     linked_list.add_first(100, INT_FLAG);
     linked_list.add_last(1000, INT_FLAG);
     linked_list.add_last(10, INT_FLAG);
-    linked_list.add_at(10000, INT_FLAG, 2);
+    linked_list.add_at(10000, INT_FLAG, 1);
     cout << "No of nodes is " << linked_list.get_length() << endl;
 
     linked_list.display_nodes();
