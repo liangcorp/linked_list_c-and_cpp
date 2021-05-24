@@ -54,14 +54,7 @@ SingleLinkedList<T>::SingleLinkedList(T new_var, int node_flag)
 
     head->next_node_ptr = NULL;
 
-    if (node_flag == INT_FLAG)
-        *(head->content) = new_var;
-    else if (node_flag == FLOAT_FLAG)
-        *(head->content) = new_var;
-    else if (node_flag == CHAR_FLAG)
-        *(head->content) = new_var;
-    else
-        perror("Invalid content flag\n");
+    *(head->content) = new_var;
 
     this -> node_flag = node_flag;
 }
@@ -127,7 +120,7 @@ int SingleLinkedList<T>::free_memory()
 int main(void)
 {
     int i_num = 10;
-    SingleLinkedList<int> linked_list(i_num, 0);
+    SingleLinkedList<int> linked_list(10, INT_FLAG);
 
     cout << "No of nodes is " << linked_list.get_length() << endl;
 
