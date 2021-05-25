@@ -342,13 +342,16 @@ int sort_aes(node_t **head)
                 {
                     /* swap integer numbers */
                     i_temp = current_node->node_content->i_num;
+
                     current_node->node_content->i_num =
                         current_node->nxt_node_ptr->node_content->i_num;
+
                     current_node->nxt_node_ptr->node_content->i_num =
                                                                 i_temp;
                 }
                 current_node = current_node->nxt_node_ptr;
             }
+            current_node = *head;
         }
     }
     else if ((*head)->node_flag == FLOAT_FLAG)
@@ -365,13 +368,16 @@ int sort_aes(node_t **head)
                 {
                     /* swap float numbers */
                     f_temp = current_node->node_content->f_num;
+
                     current_node->node_content->f_num =
                         current_node->nxt_node_ptr->node_content->f_num;
+
                     current_node->nxt_node_ptr->node_content->f_num =
                                                                 f_temp;
                 }
                 current_node = current_node->nxt_node_ptr;
             }
+            current_node = *head;
         }
     }
     else if ((*head)->node_flag == CHAR_FLAG)
@@ -387,13 +393,145 @@ int sort_aes(node_t **head)
                 {
                     /* swap characters */
                     c_temp = current_node->node_content->c;
+
                     current_node->node_content->c =
                         current_node->nxt_node_ptr->node_content->c;
+
                     current_node->nxt_node_ptr->node_content->c =
                                                                 c_temp;
                 }
                 current_node = current_node->nxt_node_ptr;
             }
+            current_node = *head;
+        }
+    }
+    else
+    {
+        #ifdef DEBUG
+            printf("Unrecognised FLAG\n");
+        #endif
+
+        result = -1;
+    }
+
+    return result;
+}
+
+int sort_des(node_t **head)
+{
+    int result = 0;
+    int i = 0;
+    int no_of_nodes = 0;
+
+    int i_temp = 0;
+    float f_temp = 0.0F;
+    char c_temp = '\0';
+
+    int i_current = 0;
+    int i_next = 0;
+
+    float f_current = 0.0F;
+    float f_next = 0.0F;
+
+    char c_current = '\0';
+    char c_next = '\0';
+
+    node_t *current_node = NULL;
+
+    current_node = *head;
+
+    while (current_node->nxt_node_ptr != NULL)
+    {
+        current_node = current_node->nxt_node_ptr;
+        no_of_nodes++;
+    }
+
+    current_node = *head;
+
+    if ((*head)->node_flag == INT_FLAG)
+    {
+        for (i = 0; i < no_of_nodes; i++)
+        {
+            while (current_node->nxt_node_ptr != NULL)
+            {
+                i_current = current_node->node_content->i_num;
+                i_next =
+                        current_node->nxt_node_ptr->node_content->i_num;
+
+                if (i_current < i_next)
+                {
+                    /* swap integer numbers */
+                    i_temp = current_node->node_content->i_num;
+
+                    current_node->node_content->i_num =
+                        current_node->nxt_node_ptr->node_content->i_num;
+
+                    current_node->nxt_node_ptr->node_content->i_num =
+                                                                i_temp;
+                }
+                #ifdef DEBUG
+                    printf("Round %d\n", i);
+                #endif
+                current_node = current_node->nxt_node_ptr;
+            }
+            current_node = *head;
+        }
+    }
+    else if ((*head)->node_flag == FLOAT_FLAG)
+    {
+        for (i = 0; i < no_of_nodes; i++)
+        {
+            while (current_node->nxt_node_ptr != NULL)
+            {
+                f_current = current_node->node_content->f_num;
+                f_next =
+                        current_node->nxt_node_ptr->node_content->f_num;
+
+                if (f_current < f_next)
+                {
+                    /* swap float numbers */
+                    f_temp = current_node->node_content->f_num;
+
+                    current_node->node_content->f_num =
+                        current_node->nxt_node_ptr->node_content->f_num;
+
+                    current_node->nxt_node_ptr->node_content->f_num =
+                                                                f_temp;
+                }
+                current_node = current_node->nxt_node_ptr;
+                #ifdef DEBUG
+                    printf("Round %d\n", i);
+                #endif
+            }
+            current_node = *head;
+        }
+    }
+    else if ((*head)->node_flag == CHAR_FLAG)
+    {
+        for (i = 0; i < no_of_nodes; i++)
+        {
+            while (current_node->nxt_node_ptr != NULL)
+            {
+                c_current = current_node->node_content->c;
+                c_next = current_node->nxt_node_ptr->node_content->c;
+
+                if (c_current < c_next)
+                {
+                    /* swap characters */
+                    c_temp = current_node->node_content->c;
+
+                    current_node->node_content->c =
+                        current_node->nxt_node_ptr->node_content->c;
+
+                    current_node->nxt_node_ptr->node_content->c =
+                                                                c_temp;
+                }
+                current_node = current_node->nxt_node_ptr;
+                #ifdef DEBUG
+                    printf("Round %d\n", i);
+                #endif
+            }
+            current_node = *head;
         }
     }
     else
@@ -481,29 +619,22 @@ int free_memory(node_t *head)
 int main(void)
 {
     node_t *head = NULL;
-    int i_new = 100;
-    int i_new2 = 1000;
-    int i_new3 = 10;
-    int i_new4 = 10000;
-    int i_new5 = 1;
-    char c_new = 'B';
-    char c_new2 = 'A';
+
+    int i_new[] = { 100, 1000, 10, 10000, 1 };
+
+    char c_new = 'A';
+    char c_new2 = 'B';
     char c_new3 = 'C';
     char c_new4 = 'F';
     char c_new5 = 'Z';
-    /*
-        char c_new = 'A';
-        float f_new = 10.01;
-        char c_new2 = 'B';
 
-     */
     /*
-        add_first(&head, &i_new, INT_FLAG);
-        add_first(&head, &i_new2, INT_FLAG);
-        add_first(&head, &i_new3, INT_FLAG);
+        add_first(&head, &i_new[0], INT_FLAG);
+        add_first(&head, &i_new[1], INT_FLAG);
+        add_last(&head, &i_new[2], INT_FLAG);
 
-        add_last(&head, &i_new4, INT_FLAG);
-        add_at(&head, &i_new5, 0, INT_FLAG);
+        add_last(&head, &i_new[3], INT_FLAG);
+        add_at(&head, &i_new[4], 0, INT_FLAG);
     */
 
     add_first(&head, &c_new, CHAR_FLAG);
@@ -512,9 +643,15 @@ int main(void)
     add_at(&head, &c_new4, 3, CHAR_FLAG);
     add_at(&head, &c_new5, 2, CHAR_FLAG);
 
-    // add_first(&head);
-    // remove_at(&head, 4);
+    /*
+        remove_first(&head);
+        remove_at(&head, 4);
+        remove_last(&head);
+     */
+
     sort_aes(&head);
+    /* sort_des(&head); */
+
     printf("There are %d nodes\n", length_of(head));
     display_nodes(head);
     free_memory(head);
