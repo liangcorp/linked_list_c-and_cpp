@@ -70,9 +70,6 @@ int add_last(node_t **head, void *new_var, int content_flag)
     node_t *current_node = NULL;
     content_t *new_content = NULL;
 
-    new_tail = calloc(1, sizeof(node_t));
-
-
     if (*head == NULL)
     {
         new_tail = calloc(1, sizeof(node_t));
@@ -137,54 +134,62 @@ int add_at(node_t **head, void *new_var, int index,
 
     content_t *new_content = NULL;
 
-    new_node = calloc(1, sizeof(node_t));
-    new_content = calloc(1, sizeof(content_t));
-
-    if (content_flag == INT_FLAG)
-    {
-        new_content->i_num = *(int *)new_var;
-        new_node->node_flag = INT_FLAG;
-    }
-    else if (content_flag == FLOAT_FLAG)
-    {
-        new_content->f_num = *(float *)new_var;
-        new_node->node_flag = FLOAT_FLAG;
-    }
-    else if (content_flag == CHAR_FLAG)
-    {
-        new_content->c = *(char *)new_var;
-        new_node->node_flag = CHAR_FLAG;
-    }
-    else
-    {
-        result = -1;
-    }
-
-    new_node->node_content = new_content;
-
     if (*head == NULL)
     {
-        *head = new_node;
+        new_node = calloc(1, sizeof(node_t));
+        new_node->node_flag = content_flag;
     }
-    else if (index == 0)
+    else if ((*head)->node_flag != content_flag)
     {
-        new_node->nxt_node_ptr = *head;
-        *head = new_node;
+        #ifdef DEBUG
+            printf("Incompatible variable type\n");
+        #endif
+
+        result = -1;
     }
     else
     {
-        pre_node = *head;
-        next_node = (*head)->nxt_node_ptr;
+        new_node = calloc(1, sizeof(node_t));
+        new_content = calloc(1, sizeof(content_t));
 
-        while(i < index && pre_node->nxt_node_ptr != NULL)
+        if (content_flag == INT_FLAG)
+            new_content->i_num = *(int *)new_var;
+        else if (content_flag == FLOAT_FLAG)
+            new_content->f_num = *(float *)new_var;
+        else if (content_flag == CHAR_FLAG)
+            new_content->c = *(char *)new_var;
+        else
+            result = -1;
+
+        new_node->node_content = new_content;
+    }
+
+    if (result != -1)
+    {
+        if (*head == NULL)
         {
-            pre_node = pre_node->nxt_node_ptr;
-            next_node = pre_node->nxt_node_ptr;
-            i++;
+            *head = new_node;
         }
+        else if (index == 0)
+        {
+            new_node->nxt_node_ptr = *head;
+            *head = new_node;
+        }
+        else
+        {
+            pre_node = *head;
+            next_node = (*head)->nxt_node_ptr;
 
-        pre_node->nxt_node_ptr = new_node;
-        new_node->nxt_node_ptr = next_node;
+            while(i < index && pre_node->nxt_node_ptr != NULL)
+            {
+                pre_node = pre_node->nxt_node_ptr;
+                next_node = pre_node->nxt_node_ptr;
+                i++;
+            }
+
+            pre_node->nxt_node_ptr = new_node;
+            new_node->nxt_node_ptr = next_node;
+        }
     }
 
     return result;
@@ -267,11 +272,24 @@ int remove_at(node_t **head, int index)
             i++;
         }
 
-        pre_node->nxt_node_ptr = to_be_removed->nxt_node_ptr;
+
     }
 
-    free(to_be_removed->node_content);
-    free(to_be_removed);
+    if (i < index && to_be_removed->nxt_node_ptr == NULL)
+    {
+        #ifdef DEBUG
+            printf("Not enough nodes in the linked list\n");
+        #endif
+
+        result = -1;
+    }
+    else
+    {
+        pre_node->nxt_node_ptr = to_be_removed->nxt_node_ptr;
+
+        free(to_be_removed->node_content);
+        free(to_be_removed);
+    }
 
     return result;
 }
@@ -353,13 +371,14 @@ int main(void)
     int i_new2 = 1000;
     int i_new3 = 10;
     int i_new4 = 10000;
+    int i_new5 = 1;
     char c_new = 'A';
-
+    char c_new3 = 'C';
     /*
         char c_new = 'A';
         float f_new = 10.01;
         char c_new2 = 'B';
-        char c_new3 = 'C';
+
      */
 
     add_first(&head, &i_new, INT_FLAG);
@@ -368,9 +387,9 @@ int main(void)
 
     add_last(&head, &i_new4, INT_FLAG);
     // add_last(&head, &c_new, CHAR_FLAG);
-    // add_at(&head, &c_new3, 9, CHAR_FLAG);
+    add_at(&head, &i_new5, 0, INT_FLAG);
     // add_first(&head);
-    // remove_at(&head, 3);
+    // remove_at(&head, 4);
 
     printf("There are %d nodes\n", length_of(head));
     display_nodes(head);
