@@ -1,1 +1,1 @@
-# Implementing linkedlist in C++
+# Implementing linked list in C++
