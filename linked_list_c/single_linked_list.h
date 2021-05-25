@@ -38,6 +38,9 @@ int remove_first(node_t **head);
 int remove_last(node_t **head);
 int remove_at(node_t **head, int index);
 
+int sort_aes(node_t **head);
+int sort_des(node_t **head);
+
 int length_of(node_t *head);
 
 void display_nodes(node_t *head);

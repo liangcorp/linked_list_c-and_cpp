@@ -21,57 +21,43 @@ int add_first(node_t **head, void *new_var, int content_flag)
     node_t *new_head = NULL;
     content_t *new_content = NULL;
 
-    new_head = calloc(1, sizeof(node_t));
-    new_content = calloc(1, sizeof(content_t));
-
-    /*
-        Using union maybe a bad idea.
-     */
-
-    if (content_flag == INT_FLAG)
+    if (*head == NULL)
     {
-        new_content->i_num = *(int *)new_var;
-        new_head->node_flag = INT_FLAG;
-
-        #ifdef DEBUG
-            printf("Integer %d\n", new_content->i_num);
-        #endif
-    }
-    else if (content_flag == FLOAT_FLAG)
-    {
-        new_content->f_num = *(float *)new_var;
-        new_head->node_flag = FLOAT_FLAG;
-
-        #ifdef DEBUG
-            printf("Float %d\n", new_content->f_num);
-        #endif
-    }
-    else if (content_flag == CHAR_FLAG)
-    {
-        new_content->c = *(char *)new_var;
-        new_head->node_flag = CHAR_FLAG;
-
-        #ifdef DEBUG
-            printf("Character %d\n", new_content->c);
-        #endif
-    }
-    else
-    {
-        result = -1;
-    }
-
-    new_head->node_content = new_content;
-
-    if (*head != NULL)
-    {
-        new_head->nxt_node_ptr = *head;
-    }
-    else
-    {
+        new_head = calloc(1, sizeof(node_t));
+        new_head->node_flag = content_flag;
         new_head->nxt_node_ptr = NULL;
     }
+    else if (*head != NULL && (*head)->node_flag != content_flag)
+    {
+        #ifdef DEBUG
+            printf("Content is not compatible with linked list\n");
+        #endif
 
-    *head = new_head;
+        result = -1;
+    }
+    else
+    {
+        new_head = calloc(1, sizeof(node_t));
+
+        new_head->nxt_node_ptr = *head;
+    }
+
+    if (result != -1)
+    {
+        new_content = calloc(1, sizeof(content_t));
+
+        if (content_flag == INT_FLAG)
+            new_content->i_num = *(int *)new_var;
+        else if (content_flag == FLOAT_FLAG)
+            new_content->f_num = *(float *)new_var;
+        else if (content_flag == CHAR_FLAG)
+            new_content->c = *(char *)new_var;
+        else
+            result = -1;
+
+        new_head->node_content = new_content;
+        *head = new_head;
+    }
 
     return result;
 }
@@ -363,20 +349,26 @@ int main(void)
 {
     node_t *head = NULL;
     int i_new = 100;
-    char c_new = 'A';
-    float f_new = 10.01;
-    char c_new2 = 'B';
-    char c_new3 = 'C';
+    int i_new2 = 1000;
+    int i_new3 = 10;
+    int i_new4 = 10000;
+
+    /*
+        char c_new = 'A';
+        float f_new = 10.01;
+        char c_new2 = 'B';
+        char c_new3 = 'C';
+     */
 
     add_first(&head, &i_new, INT_FLAG);
-    add_first(&head, &c_new, CHAR_FLAG);
-    add_first(&head, &f_new, FLOAT_FLAG);
+    add_first(&head, &i_new2, INT_FLAG);
+    add_first(&head, &i_new3, INT_FLAG);
 
     // add_last(&head, &c_new2, CHAR_FLAG);
-    add_at(&head, &c_new3, 9, CHAR_FLAG);
+    // add_at(&head, &c_new3, 9, CHAR_FLAG);
     // add_first(&head);
     // add_last(&head);
-    remove_at(&head, 3);
+    // remove_at(&head, 3);
 
     printf("There are %d nodes\n", length_of(head));
     display_nodes(head);
