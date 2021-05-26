@@ -355,6 +355,244 @@ int remove_at(node_t **head, node_t **tail, int position)
     return result;
 }
 
+int sort_aes(node_t **head)
+{
+    int result = 0;
+    int i = 0;
+    int no_of_nodes = 0;
+
+    int i_temp = 0;
+    float f_temp = 0.0F;
+    char c_temp = '\0';
+
+    int i_current = 0;
+    int i_next = 0;
+
+    float f_current = 0.0F;
+    float f_next = 0.0F;
+
+    char c_current = '\0';
+    char c_next = '\0';
+
+    node_t *current_node = NULL;
+
+    current_node = *head;
+
+    while (current_node->nxt_node != NULL)
+    {
+        current_node = current_node->nxt_node;
+        no_of_nodes++;
+    }
+    current_node = *head;
+
+    if ((*head)->node_flag == INT_FLAG)
+    {
+        for (i = 0; i < no_of_nodes; i++)
+        {
+            while (current_node->nxt_node != NULL)
+            {
+                i_current = current_node->content->i_num;
+                i_next =
+                        current_node->nxt_node->content->i_num;
+
+                if (i_current > i_next)
+                {
+                    /* swap integer numbers */
+                    i_temp = current_node->content->i_num;
+
+                    current_node->content->i_num =
+                        current_node->nxt_node->content->i_num;
+
+                    current_node->nxt_node->content->i_num =
+                                                                i_temp;
+                }
+                current_node = current_node->nxt_node;
+            }
+            current_node = *head;
+        }
+    }
+    else if ((*head)->node_flag == FLOAT_FLAG)
+    {
+        for (i = 0; i < no_of_nodes; i++)
+        {
+            while (current_node->nxt_node != NULL)
+            {
+                f_current = current_node->content->f_num;
+                f_next =
+                        current_node->nxt_node->content->f_num;
+
+                if (f_current > f_next)
+                {
+                    /* swap float numbers */
+                    f_temp = current_node->content->f_num;
+
+                    current_node->content->f_num =
+                        current_node->nxt_node->content->f_num;
+
+                    current_node->nxt_node->content->f_num =
+                                                                f_temp;
+                }
+                current_node = current_node->nxt_node;
+            }
+            current_node = *head;
+        }
+    }
+    else if ((*head)->node_flag == CHAR_FLAG)
+    {
+        for (i = 0; i < no_of_nodes; i++)
+        {
+            while (current_node->nxt_node != NULL)
+            {
+                c_current = current_node->content->c;
+                c_next = current_node->nxt_node->content->c;
+
+                if (c_current > c_next)
+                {
+                    /* swap characters */
+                    c_temp = current_node->content->c;
+
+                    current_node->content->c =
+                        current_node->nxt_node->content->c;
+
+                    current_node->nxt_node->content->c =
+                                                                c_temp;
+                }
+                current_node = current_node->nxt_node;
+            }
+            current_node = *head;
+        }
+    }
+    else
+    {
+        #ifdef DEBUG
+            printf("Unrecognised FLAG\n");
+        #endif
+
+        result = -1;
+    }
+
+    return result;
+}
+
+int sort_des(node_t **head)
+{
+    int result = 0;
+    int i = 0;
+    int no_of_nodes = 0;
+
+    int i_temp = 0;
+    float f_temp = 0.0F;
+    char c_temp = '\0';
+
+    int i_current = 0;
+    int i_next = 0;
+
+    float f_current = 0.0F;
+    float f_next = 0.0F;
+
+    char c_current = '\0';
+    char c_next = '\0';
+
+    node_t *current_node = NULL;
+
+    current_node = *head;
+
+    while (current_node->nxt_node != NULL)
+    {
+        current_node = current_node->nxt_node;
+        no_of_nodes++;
+    }
+    current_node = *head;
+
+    if ((*head)->node_flag == INT_FLAG)
+    {
+        for (i = 0; i < no_of_nodes; i++)
+        {
+            while (current_node->nxt_node != NULL)
+            {
+                i_current = current_node->content->i_num;
+                i_next =
+                        current_node->nxt_node->content->i_num;
+
+                if (i_current < i_next)
+                {
+                    /* swap integer numbers */
+                    i_temp = current_node->content->i_num;
+
+                    current_node->content->i_num =
+                        current_node->nxt_node->content->i_num;
+
+                    current_node->nxt_node->content->i_num =
+                                                                i_temp;
+                }
+                current_node = current_node->nxt_node;
+            }
+            current_node = *head;
+        }
+    }
+    else if ((*head)->node_flag == FLOAT_FLAG)
+    {
+        for (i = 0; i < no_of_nodes; i++)
+        {
+            while (current_node->nxt_node != NULL)
+            {
+                f_current = current_node->content->f_num;
+                f_next =
+                        current_node->nxt_node->content->f_num;
+
+                if (f_current < f_next)
+                {
+                    /* swap float numbers */
+                    f_temp = current_node->content->f_num;
+
+                    current_node->content->f_num =
+                        current_node->nxt_node->content->f_num;
+
+                    current_node->nxt_node->content->f_num =
+                                                                f_temp;
+                }
+                current_node = current_node->nxt_node;
+            }
+            current_node = *head;
+        }
+    }
+    else if ((*head)->node_flag == CHAR_FLAG)
+    {
+        for (i = 0; i < no_of_nodes; i++)
+        {
+            while (current_node->nxt_node != NULL)
+            {
+                c_current = current_node->content->c;
+                c_next = current_node->nxt_node->content->c;
+
+                if (c_current < c_next)
+                {
+                    /* swap characters */
+                    c_temp = current_node->content->c;
+
+                    current_node->content->c =
+                        current_node->nxt_node->content->c;
+
+                    current_node->nxt_node->content->c =
+                                                                c_temp;
+                }
+                current_node = current_node->nxt_node;
+            }
+            current_node = *head;
+        }
+    }
+    else
+    {
+        #ifdef DEBUG
+            printf("Unrecognised FLAG\n");
+        #endif
+
+        result = -1;
+    }
+
+    return result;
+}
+
 void display(node_t *head)
 {
     int i = 0;
@@ -442,6 +680,7 @@ int main(void)
 
     int i_num = 100;
     int i_num2 = 200;
+    int i_num3 = 300;
     char c1 = 'A';
     float f_num = 10.01;
     float f_num2 = 20.02;
@@ -451,11 +690,14 @@ int main(void)
     add_end(&head, &tail, &f_num, FLOAT_FLAG);
     add_at(&head, &tail, &i_num2, INT_FLAG, 2);
 
-    add_at(&head, &tail, &f_num2, FLOAT_FLAG, 1);
+    add_at(&head, &tail, &i_num3, INT_FLAG, 1);
 
+    sort_aes(&head);
+    /*
     remove_first(&head, &tail);
     remove_last(&head, &tail);
     remove_at(&head, &tail, 2);
+    */
 
     printf("Number of nodes %d\n", length_of(head));
     display(head);
