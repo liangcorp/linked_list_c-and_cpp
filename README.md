@@ -5,4 +5,4 @@ Double linked list in C is working but not as it should be.
 
 Not going to implement doubly linked list in C++.
 
-@TODO Linekd list in Rust and Javascript
+@To do - Linekd list in Rust and Javascript
