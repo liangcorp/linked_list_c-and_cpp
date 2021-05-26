@@ -294,7 +294,7 @@ int remove_at(node_t **head, node_t **tail, int position)
 
     to_be_removed = *head;
 
-    while (to_be_removed->nxt_node != NULL)
+    while (*head != NULL && to_be_removed->nxt_node != NULL)
     {
         to_be_removed = to_be_removed->nxt_node;
         index++;
@@ -302,10 +302,18 @@ int remove_at(node_t **head, node_t **tail, int position)
 
     if (*head == NULL && *tail == NULL)
     {
+        #ifdef DEBUG
+            printf("Linked list is empty\n");
+        #endif
+
         result = -1;
     }
     else if (index < position)
     {
+        #ifdef DEBUG
+            printf("Not enough elements\n");
+        #endif
+
         result = -1;
     }
     else if (position == 0)
@@ -445,9 +453,9 @@ int main(void)
 
     add_at(&head, &tail, &f_num2, FLOAT_FLAG, 1);
 
-    // remove_first(&head, &tail);
-    // remove_last(&head, &tail);
-    // remove_at(&head, &tail, 2);
+    remove_first(&head, &tail);
+    remove_last(&head, &tail);
+    remove_at(&head, &tail, 2);
 
     printf("Number of nodes %d\n", length_of(head));
     display(head);
