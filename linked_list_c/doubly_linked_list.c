@@ -23,55 +23,56 @@ int add_first(node_t **head, node_t **tail, void *new_var,
 
     content_t *new_content = NULL;
 
-    new_node = calloc(1, sizeof(node_t));
-    new_content = calloc(1, sizeof(content_t));
-    new_node->content = new_content;
-
-    if (node_flag == INT_FLAG)
+    if (*head != NULL && (*head)->node_flag != node_flag)
     {
-        new_content->i_num = *(int *)new_var;
-        new_node->node_flag = INT_FLAG;
-    }
-    else if (node_flag == FLOAT_FLAG)
-    {
-        new_content->f_num = *(float *)new_var;
-        new_node->node_flag = FLOAT_FLAG;
-    }
-    else if (node_flag == CHAR_FLAG)
-    {
-        new_content->c = *(char *)new_var;
-        new_node->node_flag = CHAR_FLAG;
-    }
-    else
-    {
+        #ifdef DEBUG
+            printf("Incompatible variable type\n");
+        #endif
         result = -1;
     }
 
-    if (*head == NULL && *tail == NULL)
+    if (result != -1)
     {
+        new_node = calloc(1, sizeof(node_t));
+        new_content = calloc(1, sizeof(content_t));
+
+        new_node->content = new_content;
+        new_node->node_flag = node_flag;
         new_node->pre_node = NULL;
         new_node->nxt_node = NULL;
-        *head = new_node;
-        *tail = new_node;
+
+        if (node_flag == INT_FLAG)
+            new_content->i_num = *(int *)new_var;
+        else if (node_flag == FLOAT_FLAG)
+            new_content->f_num = *(float *)new_var;
+        else if (node_flag == CHAR_FLAG)
+            new_content->c = *(char *)new_var;
+        else
+            result = -1;
+
+
+        if (*head == NULL)
+        {
+            *head = new_node;
+        }
+        else
+        {
+            (*head)->pre_node = new_node;
+
+            new_node->nxt_node = *head;
+
+            *head = new_node;
+
+            current_node = *head;
+
+            while (current_node->nxt_node != NULL)
+            {
+                current_node = current_node->nxt_node;
+            }
+
+            *tail = current_node;
+        }
     }
-    else
-    {
-        new_node->pre_node = NULL;
-        (*head)->pre_node = new_node;
-
-        new_node->nxt_node = *head;
-        *head = new_node;
-    }
-
-    current_node = *head;
-
-    while (current_node->nxt_node != NULL)
-    {
-        current_node = current_node->nxt_node;
-
-    }
-
-    *tail = current_node;
 
     return result;
 }
@@ -85,55 +86,55 @@ int add_end(node_t **head, node_t **tail, void *new_var,
 
     content_t *new_content = NULL;
 
-    new_node = calloc(1, sizeof(node_t));
-    new_content = calloc(1, sizeof(content_t));
-    new_node->content = new_content;
-
-    if (node_flag == INT_FLAG)
+    if (*tail != NULL && (*tail)->node_flag != node_flag)
     {
-        new_content->i_num = *(int *)new_var;
-        new_node->node_flag = INT_FLAG;
-    }
-    else if (node_flag == FLOAT_FLAG)
-    {
-        new_content->f_num = *(float *)new_var;
-        new_node->node_flag = FLOAT_FLAG;
-    }
-    else if (node_flag == CHAR_FLAG)
-    {
-        new_content->c = *(char *)new_var;
-        new_node->node_flag = CHAR_FLAG;
-    }
-    else
-    {
+        #ifdef DEBUG
+            printf("Incompatible variable type\n");
+        #endif
         result = -1;
     }
 
-    if (*head == NULL && *tail == NULL)
+    if (result != -1)
     {
+        new_node = calloc(1, sizeof(node_t));
+        new_content = calloc(1, sizeof(content_t));
+
+        new_node->content = new_content;
+        new_node->node_flag = node_flag;
         new_node->pre_node = NULL;
         new_node->nxt_node = NULL;
-        *head = new_node;
-        *tail = new_node;
+
+        if (node_flag == INT_FLAG)
+            new_content->i_num = *(int *)new_var;
+        else if (node_flag == FLOAT_FLAG)
+            new_content->f_num = *(float *)new_var;
+        else if (node_flag == CHAR_FLAG)
+            new_content->c = *(char *)new_var;
+        else
+            result = -1;
+
+        if (*tail == NULL)
+        {
+            *tail = new_node;
+        }
+        else
+        {
+            new_node->nxt_node = NULL;
+            (*tail)->nxt_node = new_node;
+
+            new_node->pre_node = *tail;
+            *tail = new_node;
+
+            current_node = *tail;
+
+            while (current_node->pre_node != NULL)
+            {
+                current_node = current_node->pre_node;
+            }
+
+            *head = current_node;
+        }
     }
-    else
-    {
-        new_node->nxt_node = NULL;
-        (*tail)->nxt_node = new_node;
-
-        new_node->pre_node = *tail;
-        *tail = new_node;
-    }
-
-    current_node = *tail;
-
-    while (current_node->pre_node != NULL)
-    {
-        current_node = current_node->pre_node;
-
-    }
-
-    *head = current_node;
 
     return result;
 }
@@ -151,75 +152,75 @@ int add_at(node_t **head, node_t **tail, void *new_var,
 
     content_t *new_content = NULL;
 
-    new_node = calloc(1, sizeof(node_t));
-    new_content = calloc(1, sizeof(content_t));
-
-    new_node->content = new_content;
-
-    if (node_flag == INT_FLAG)
+    if (*head != NULL && (*head)->node_flag != node_flag)
     {
-        new_content->i_num = *(int *)new_var;
-        new_node->node_flag = INT_FLAG;
-    }
-    else if (node_flag == FLOAT_FLAG)
-    {
-        new_content->f_num = *(float *)new_var;
-        new_node->node_flag = FLOAT_FLAG;
-    }
-    else if (node_flag == CHAR_FLAG)
-    {
-        new_content->c = *(char *)new_var;
-        new_node->node_flag = CHAR_FLAG;
-    }
-    else
-    {
+        #ifdef DEBUG
+            printf("Incompatible variable type\n");
+        #endif
         result = -1;
     }
 
-    if (*head == NULL && *tail == NULL)
+    if (result != -1)
     {
-        new_node->pre_node = NULL;
-        new_node->nxt_node = NULL;
-        *head = new_node;
-        *tail = new_node;
-    }
-    else if (position == 0)
-    {
-        new_node->nxt_node = *head;
-        *head = new_node;
-    }
-    else
-    {
-        pre_node = *head;
-        next_node = (*head)->nxt_node;
+        new_node = calloc(1, sizeof(node_t));
+        new_content = calloc(1, sizeof(content_t));
 
-        while(index < position && pre_node->nxt_node != NULL)
+        new_node->content = new_content;
+        new_node->node_flag = node_flag;
+        new_node->nxt_node = NULL;
+        new_node->pre_node = NULL;
+
+        if (node_flag == INT_FLAG)
+            new_content->i_num = *(int *)new_var;
+        else if (node_flag == FLOAT_FLAG)
+            new_content->f_num = *(float *)new_var;
+        else if (node_flag == CHAR_FLAG)
+            new_content->c = *(char *)new_var;
+        else
+            result = -1;
+
+        if (*head == NULL)
         {
-            pre_node = pre_node->nxt_node;
-            next_node = pre_node->nxt_node;
-            index++;
+            *head = new_node;
+        }
+        else if (position == 0)
+        {
+            new_node->nxt_node = *head;
+            *head = new_node;
+        }
+        else
+        {
+            pre_node = *head;
+            next_node = (*head)->nxt_node;
+
+            while(index < position && pre_node->nxt_node != NULL)
+            {
+                pre_node = pre_node->nxt_node;
+                next_node = pre_node->nxt_node;
+                index++;
+            }
+
+            pre_node->nxt_node = new_node;
+
+            new_node->pre_node = pre_node;
+            new_node->nxt_node = next_node;
+
+            if (next_node == NULL)
+                new_node->nxt_node = NULL;
+            else
+                next_node->pre_node = new_node;
         }
 
-        pre_node->nxt_node = new_node;
+        current_node = *head;
 
-        new_node->pre_node = pre_node;
-        new_node->nxt_node = next_node;
+        while (current_node->nxt_node != NULL)
+        {
+            current_node = current_node->nxt_node;
 
-        if (next_node == NULL)
-            new_node->nxt_node = NULL;
-        else
-            next_node->pre_node = new_node;
+        }
+
+        *tail = current_node;
     }
-
-    current_node = *head;
-
-    while (current_node->nxt_node != NULL)
-    {
-        current_node = current_node->nxt_node;
-
-    }
-
-    *tail = current_node;
 
     return result;
 }
@@ -437,16 +438,16 @@ int main(void)
     float f_num = 10.01;
     float f_num2 = 20.02;
 
-    add_first(&head, &tail, &i_num, INT_FLAG);
-    add_first(&head, &tail, &c1, CHAR_FLAG);
+    add_at(&head, &tail, &i_num, INT_FLAG, 0);
+    add_at(&head, &tail, &c1, CHAR_FLAG, 1);
     add_end(&head, &tail, &f_num, FLOAT_FLAG);
-    add_end(&head, &tail, &i_num2, INT_FLAG);
+    add_at(&head, &tail, &i_num2, INT_FLAG, 2);
 
-    add_at(&head, &tail, &f_num2, FLOAT_FLAG, 9);
+    add_at(&head, &tail, &f_num2, FLOAT_FLAG, 1);
 
-    remove_first(&head, &tail);
-    remove_last(&head, &tail);
-    remove_at(&head, &tail, 2);
+    // remove_first(&head, &tail);
+    // remove_last(&head, &tail);
+    // remove_at(&head, &tail, 2);
 
     printf("Number of nodes %d\n", length_of(head));
     display(head);

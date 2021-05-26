@@ -40,6 +40,9 @@ int remove_first(node_t **head, node_t **tail);
 int remove_last(node_t **head, node_t **tail);
 int remove_at(node_t **head, node_t **tail, int position);
 
+int sort_aes(node_t **head);
+int sort_des(node_t **head);
+
 void display(node_t *head);
 void display_reverse(node_t *tail);
 
