@@ -1,5 +1,8 @@
-struct Node {
-    content: i32,
+use std::boxed::Box;
+
+enum Node {
+    Content,
+    Box::new(Node),
 }
 
 fn main() {
