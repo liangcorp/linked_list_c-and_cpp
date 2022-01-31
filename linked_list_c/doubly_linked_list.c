@@ -14,7 +14,7 @@
 #include "doubly_linked_list.h"
 
 int add_first(node_t **head, node_t **tail, void *new_var,
-                                                    int node_flag)
+              int node_flag)
 {
     int result = 0;
 
@@ -25,9 +25,9 @@ int add_first(node_t **head, node_t **tail, void *new_var,
 
     if (*head != NULL && (*head)->node_flag != node_flag)
     {
-        #ifdef DEBUG
-            printf("Incompatible variable type\n");
-        #endif
+#ifdef DEBUG
+        printf("Incompatible variable type\n");
+#endif
         result = -1;
     }
 
@@ -78,7 +78,7 @@ int add_first(node_t **head, node_t **tail, void *new_var,
 }
 
 int add_end(node_t **head, node_t **tail, void *new_var,
-                                                int node_flag)
+            int node_flag)
 {
     int result = 0;
     node_t *new_node = NULL;
@@ -88,9 +88,9 @@ int add_end(node_t **head, node_t **tail, void *new_var,
 
     if (*tail != NULL && (*tail)->node_flag != node_flag)
     {
-        #ifdef DEBUG
-            printf("Incompatible variable type\n");
-        #endif
+#ifdef DEBUG
+        printf("Incompatible variable type\n");
+#endif
         result = -1;
     }
 
@@ -140,7 +140,7 @@ int add_end(node_t **head, node_t **tail, void *new_var,
 }
 
 int add_at(node_t **head, node_t **tail, void *new_var,
-                                        int node_flag, int position)
+           int node_flag, int position)
 {
     int result = 0;
     int index = 1;
@@ -154,9 +154,9 @@ int add_at(node_t **head, node_t **tail, void *new_var,
 
     if (*head != NULL && (*head)->node_flag != node_flag)
     {
-        #ifdef DEBUG
-            printf("Incompatible variable type\n");
-        #endif
+#ifdef DEBUG
+        printf("Incompatible variable type\n");
+#endif
         result = -1;
     }
 
@@ -193,7 +193,7 @@ int add_at(node_t **head, node_t **tail, void *new_var,
             pre_node = *head;
             next_node = (*head)->nxt_node;
 
-            while(index < position && pre_node->nxt_node != NULL)
+            while (index < position && pre_node->nxt_node != NULL)
             {
                 pre_node = pre_node->nxt_node;
                 next_node = pre_node->nxt_node;
@@ -302,17 +302,17 @@ int remove_at(node_t **head, node_t **tail, int position)
 
     if (*head == NULL && *tail == NULL)
     {
-        #ifdef DEBUG
-            printf("Linked list is empty\n");
-        #endif
+#ifdef DEBUG
+        printf("Linked list is empty\n");
+#endif
 
         result = -1;
     }
     else if (index < position)
     {
-        #ifdef DEBUG
-            printf("Not enough elements\n");
-        #endif
+#ifdef DEBUG
+        printf("Not enough elements\n");
+#endif
 
         result = -1;
     }
@@ -392,8 +392,7 @@ int sort_aes(node_t **head)
             while (current_node->nxt_node != NULL)
             {
                 i_current = current_node->content->i_num;
-                i_next =
-                        current_node->nxt_node->content->i_num;
+                i_next = current_node->nxt_node->content->i_num;
 
                 if (i_current > i_next)
                 {
@@ -403,8 +402,7 @@ int sort_aes(node_t **head)
                     current_node->content->i_num =
                         current_node->nxt_node->content->i_num;
 
-                    current_node->nxt_node->content->i_num =
-                                                                i_temp;
+                    current_node->nxt_node->content->i_num = i_temp;
                 }
                 current_node = current_node->nxt_node;
             }
@@ -418,8 +416,7 @@ int sort_aes(node_t **head)
             while (current_node->nxt_node != NULL)
             {
                 f_current = current_node->content->f_num;
-                f_next =
-                        current_node->nxt_node->content->f_num;
+                f_next = current_node->nxt_node->content->f_num;
 
                 if (f_current > f_next)
                 {
@@ -429,8 +426,7 @@ int sort_aes(node_t **head)
                     current_node->content->f_num =
                         current_node->nxt_node->content->f_num;
 
-                    current_node->nxt_node->content->f_num =
-                                                                f_temp;
+                    current_node->nxt_node->content->f_num = f_temp;
                 }
                 current_node = current_node->nxt_node;
             }
@@ -454,8 +450,7 @@ int sort_aes(node_t **head)
                     current_node->content->c =
                         current_node->nxt_node->content->c;
 
-                    current_node->nxt_node->content->c =
-                                                                c_temp;
+                    current_node->nxt_node->content->c = c_temp;
                 }
                 current_node = current_node->nxt_node;
             }
@@ -464,9 +459,9 @@ int sort_aes(node_t **head)
     }
     else
     {
-        #ifdef DEBUG
-            printf("Unrecognised FLAG\n");
-        #endif
+#ifdef DEBUG
+        printf("Unrecognised FLAG\n");
+#endif
 
         result = -1;
     }
@@ -511,8 +506,7 @@ int sort_des(node_t **head)
             while (current_node->nxt_node != NULL)
             {
                 i_current = current_node->content->i_num;
-                i_next =
-                        current_node->nxt_node->content->i_num;
+                i_next = current_node->nxt_node->content->i_num;
 
                 if (i_current < i_next)
                 {
@@ -522,8 +516,7 @@ int sort_des(node_t **head)
                     current_node->content->i_num =
                         current_node->nxt_node->content->i_num;
 
-                    current_node->nxt_node->content->i_num =
-                                                                i_temp;
+                    current_node->nxt_node->content->i_num = i_temp;
                 }
                 current_node = current_node->nxt_node;
             }
@@ -537,8 +530,7 @@ int sort_des(node_t **head)
             while (current_node->nxt_node != NULL)
             {
                 f_current = current_node->content->f_num;
-                f_next =
-                        current_node->nxt_node->content->f_num;
+                f_next = current_node->nxt_node->content->f_num;
 
                 if (f_current < f_next)
                 {
@@ -548,8 +540,7 @@ int sort_des(node_t **head)
                     current_node->content->f_num =
                         current_node->nxt_node->content->f_num;
 
-                    current_node->nxt_node->content->f_num =
-                                                                f_temp;
+                    current_node->nxt_node->content->f_num = f_temp;
                 }
                 current_node = current_node->nxt_node;
             }
@@ -573,8 +564,7 @@ int sort_des(node_t **head)
                     current_node->content->c =
                         current_node->nxt_node->content->c;
 
-                    current_node->nxt_node->content->c =
-                                                                c_temp;
+                    current_node->nxt_node->content->c = c_temp;
                 }
                 current_node = current_node->nxt_node;
             }
@@ -583,9 +573,9 @@ int sort_des(node_t **head)
     }
     else
     {
-        #ifdef DEBUG
-            printf("Unrecognised FLAG\n");
-        #endif
+#ifdef DEBUG
+        printf("Unrecognised FLAG\n");
+#endif
 
         result = -1;
     }
@@ -683,7 +673,7 @@ int main(void)
     int i_num3 = 300;
     char c1 = 'A';
     float f_num = 10.01;
-    float f_num2 = 20.02;
+    // float f_num2 = 20.02;
 
     add_at(&head, &tail, &i_num, INT_FLAG, 0);
     add_at(&head, &tail, &c1, CHAR_FLAG, 1);

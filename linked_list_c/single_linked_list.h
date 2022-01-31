@@ -32,7 +32,7 @@ typedef struct node
 int add_first(node_t **head, void *new_var, int content_flag);
 int add_last(node_t **head, void *new_var, int content_flag);
 int add_at(node_t **head, void *new_var, int index,
-                                                int content_flag);
+           int content_flag);
 
 int remove_first(node_t **head);
 int remove_last(node_t **head);

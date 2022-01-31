@@ -30,11 +30,11 @@ typedef struct node
 } node_t;
 
 int add_first(node_t **head, node_t **tail, void *new_var,
-                                                int node_flag);
+              int node_flag);
 int add_end(node_t **head, node_t **tail, void *new_var,
-                                                int node_flag);
+            int node_flag);
 int add_at(node_t **head, node_t **tail, void *new_var,
-                                        int node_flag, int position);
+           int node_flag, int position);
 
 int remove_first(node_t **head, node_t **tail);
 int remove_last(node_t **head, node_t **tail);
