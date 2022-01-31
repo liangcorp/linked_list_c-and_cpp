@@ -3,6 +3,6 @@ Implementation of linked list in C and C++
 
 Double linked list in C is working but not as it should be.
 
-Not going to implement doubly linked list in C++.
+May implement doubly linked list in C++ in the future.
 
 @To do - Linekd list in Rust, Java and Javascript
