@@ -14,508 +14,543 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int add_first(node_t **head, void *new_var, int content_flag) {
-    int result = 0;
+int add_first(node_t **head, void *new_var, int content_flag)
+{
+	int result = 0;
 
-    node_t *new_head = NULL;
-    content_t *new_content = NULL;
+	node_t *new_head = NULL;
+	content_t *new_content = NULL;
 
-    if (*head == NULL) {
-        new_head = calloc(1, sizeof(node_t));
-        new_head->node_flag = content_flag;
-        new_head->nxt_node_ptr = NULL;
-    } else if (*head != NULL && (*head)->node_flag != content_flag) {
+	if (*head == NULL) {
+		new_head = calloc(1, sizeof(node_t));
+		new_head->node_flag = content_flag;
+		new_head->nxt_node_ptr = NULL;
+	} else if (*head != NULL && (*head)->node_flag != content_flag) {
 #ifdef DEBUG
-        printf("Content is not compatible with linked list\n");
+		printf("Content is not compatible with linked list\n");
 #endif
 
-        result = -1;
-    } else {
-        new_head = calloc(1, sizeof(node_t));
-        new_head->node_flag = content_flag;
-        new_head->nxt_node_ptr = *head;
-    }
+		result = -1;
+	} else {
+		new_head = calloc(1, sizeof(node_t));
+		new_head->node_flag = content_flag;
+		new_head->nxt_node_ptr = *head;
+	}
 
-    if (result != -1) {
-        new_content = calloc(1, sizeof(content_t));
+	if (result != -1) {
+		new_content = calloc(1, sizeof(content_t));
 
-        if (content_flag == INT_FLAG)
-            new_content->i_num = *(int *)new_var;
-        else if (content_flag == FLOAT_FLAG)
-            new_content->f_num = *(float *)new_var;
-        else if (content_flag == CHAR_FLAG)
-            new_content->c = *(char *)new_var;
-        else
-            result = -1;
+		if (content_flag == INT_FLAG)
+			new_content->i_num = *(int *)new_var;
+		else if (content_flag == FLOAT_FLAG)
+			new_content->f_num = *(float *)new_var;
+		else if (content_flag == CHAR_FLAG)
+			new_content->c = *(char *)new_var;
+		else
+			result = -1;
 
-        new_head->node_content = new_content;
-        *head = new_head;
-    }
+		new_head->node_content = new_content;
+		*head = new_head;
+	}
 
-    return result;
+	return result;
 }
 
-int add_last(node_t **head, void *new_var, int content_flag) {
-    int result = 0;
+int add_last(node_t **head, void *new_var, int content_flag)
+{
+	int result = 0;
 
-    node_t *new_tail = NULL;
-    node_t *current_node = NULL;
-    content_t *new_content = NULL;
+	node_t *new_tail = NULL;
+	node_t *current_node = NULL;
+	content_t *new_content = NULL;
 
-    if (*head == NULL) {
-        new_tail = calloc(1, sizeof(node_t));
-        new_tail->node_flag = content_flag;
-        new_tail->nxt_node_ptr = NULL;
-    } else if (*head != NULL && (*head)->node_flag != content_flag) {
+	if (*head == NULL) {
+		new_tail = calloc(1, sizeof(node_t));
+		new_tail->node_flag = content_flag;
+		new_tail->nxt_node_ptr = NULL;
+	} else if (*head != NULL && (*head)->node_flag != content_flag) {
 #ifdef DEBUG
-        printf("Incompatible variable type\n");
+		printf("Incompatible variable type\n");
 #endif
 
-        result = -1;
-    } else {
-        new_tail = calloc(1, sizeof(node_t));
-        new_tail->node_flag = content_flag;
-    }
+		result = -1;
+	} else {
+		new_tail = calloc(1, sizeof(node_t));
+		new_tail->node_flag = content_flag;
+	}
 
-    if (result != -1) {
-        new_content = calloc(1, sizeof(content_t));
+	if (result != -1) {
+		new_content = calloc(1, sizeof(content_t));
 
-        if (content_flag == INT_FLAG)
-            new_content->i_num = *(int *)new_var;
-        else if (content_flag == FLOAT_FLAG)
-            new_content->f_num = *(float *)new_var;
-        else if (content_flag == CHAR_FLAG)
-            new_content->c = *(char *)new_var;
-        else
-            result = -1;
+		if (content_flag == INT_FLAG)
+			new_content->i_num = *(int *)new_var;
+		else if (content_flag == FLOAT_FLAG)
+			new_content->f_num = *(float *)new_var;
+		else if (content_flag == CHAR_FLAG)
+			new_content->c = *(char *)new_var;
+		else
+			result = -1;
 
-        new_tail->node_content = new_content;
+		new_tail->node_content = new_content;
 
-        if (*head == NULL) {
-            *head = new_tail;
-        } else {
-            current_node = *head;
-            while (current_node->nxt_node_ptr != NULL) {
-                current_node = current_node->nxt_node_ptr;
-            }
-            current_node->nxt_node_ptr = new_tail;
-        }
-    }
+		if (*head == NULL) {
+			*head = new_tail;
+		} else {
+			current_node = *head;
+			while (current_node->nxt_node_ptr != NULL) {
+				current_node = current_node->nxt_node_ptr;
+			}
+			current_node->nxt_node_ptr = new_tail;
+		}
+	}
 
-    return result;
+	return result;
 }
 
-int add_at(node_t **head, void *new_var, int index, int content_flag) {
-    int result = 0;
-    int i = 1;
+int add_at(node_t **head, void *new_var, int index, int content_flag)
+{
+	int result = 0;
+	int i = 1;
 
-    node_t *new_node = NULL;
-    node_t *pre_node = NULL;
-    node_t *next_node = NULL;
+	node_t *new_node = NULL;
+	node_t *pre_node = NULL;
+	node_t *next_node = NULL;
 
-    content_t *new_content = NULL;
+	content_t *new_content = NULL;
 
-    if (*head == NULL) {
-        new_node = calloc(1, sizeof(node_t));
-        new_node->node_flag = content_flag;
-    } else if ((*head)->node_flag != content_flag) {
+	if (*head == NULL) {
+		new_node = calloc(1, sizeof(node_t));
+		new_node->node_flag = content_flag;
+	} else if ((*head)->node_flag != content_flag) {
 #ifdef DEBUG
-        printf("Incompatible variable type\n");
+		printf("Incompatible variable type\n");
 #endif
 
-        result = -1;
-    } else {
-        new_node = calloc(1, sizeof(node_t));
-        new_content = calloc(1, sizeof(content_t));
-        new_node->node_flag = content_flag;
-    }
+		result = -1;
+	} else {
+		new_node = calloc(1, sizeof(node_t));
+		new_content = calloc(1, sizeof(content_t));
+		new_node->node_flag = content_flag;
+	}
 
-    if (result != -1) {
+	if (result != -1) {
+		if (content_flag == INT_FLAG)
+			new_content->i_num = *(int *)new_var;
+		else if (content_flag == FLOAT_FLAG)
+			new_content->f_num = *(float *)new_var;
+		else if (content_flag == CHAR_FLAG)
+			new_content->c = *(char *)new_var;
+		else
+			result = -1;
 
-        if (content_flag == INT_FLAG)
-            new_content->i_num = *(int *)new_var;
-        else if (content_flag == FLOAT_FLAG)
-            new_content->f_num = *(float *)new_var;
-        else if (content_flag == CHAR_FLAG)
-            new_content->c = *(char *)new_var;
-        else
-            result = -1;
+		new_node->node_content = new_content;
 
-        new_node->node_content = new_content;
+		if (*head == NULL) {
+			*head = new_node;
+		} else if (index == 0) {
+			new_node->nxt_node_ptr = *head;
+			*head = new_node;
+		} else {
+			pre_node = *head;
+			next_node = (*head)->nxt_node_ptr;
 
-        if (*head == NULL) {
-            *head = new_node;
-        } else if (index == 0) {
-            new_node->nxt_node_ptr = *head;
-            *head = new_node;
-        } else {
-            pre_node = *head;
-            next_node = (*head)->nxt_node_ptr;
+			while (i < index && pre_node->nxt_node_ptr != NULL) {
+				pre_node = pre_node->nxt_node_ptr;
+				next_node = pre_node->nxt_node_ptr;
+				i++;
+			}
 
-            while (i < index && pre_node->nxt_node_ptr != NULL) {
-                pre_node = pre_node->nxt_node_ptr;
-                next_node = pre_node->nxt_node_ptr;
-                i++;
-            }
+			pre_node->nxt_node_ptr = new_node;
+			new_node->nxt_node_ptr = next_node;
+		}
+	}
 
-            pre_node->nxt_node_ptr = new_node;
-            new_node->nxt_node_ptr = next_node;
-        }
-    }
-
-    return result;
+	return result;
 }
 
-int remove_first(node_t **head) {
-    int result = 0;
-    node_t *to_be_removed = NULL;
+int remove_first(node_t **head)
+{
+	int result = 0;
+	node_t *to_be_removed = NULL;
 
-    if (*head == NULL) {
-        result = -1;
-    } else {
-        to_be_removed = *head;
-        *head = (*head)->nxt_node_ptr;
+	if (*head == NULL) {
+		result = -1;
+	} else {
+		to_be_removed = *head;
+		*head = (*head)->nxt_node_ptr;
 
-        free(to_be_removed->node_content);
-        free(to_be_removed);
-    }
+		free(to_be_removed->node_content);
+		free(to_be_removed);
+	}
 
-    return result;
+	return result;
 }
 
-int remove_last(node_t **head) {
-    node_t *to_be_removed = NULL;
-    node_t *new_tail = NULL;
+int remove_last(node_t **head)
+{
+	node_t *to_be_removed = NULL;
+	node_t *new_tail = NULL;
 
-    int result = 0;
+	int result = 0;
 
-    if (*head == NULL) {
-        result = -1;
-    } else {
-        to_be_removed = *head;
+	if (*head == NULL) {
+		result = -1;
+	} else {
+		to_be_removed = *head;
 
-        while (to_be_removed->nxt_node_ptr != NULL) {
-            new_tail = to_be_removed;
-            to_be_removed = to_be_removed->nxt_node_ptr;
-        }
-        new_tail->nxt_node_ptr = NULL;
+		while (to_be_removed->nxt_node_ptr != NULL) {
+			new_tail = to_be_removed;
+			to_be_removed = to_be_removed->nxt_node_ptr;
+		}
+		new_tail->nxt_node_ptr = NULL;
 
-        free(to_be_removed->node_content);
-        free(to_be_removed);
-    }
+		free(to_be_removed->node_content);
+		free(to_be_removed);
+	}
 
-    return result;
+	return result;
 }
 
-int remove_at(node_t **head, int index) {
-    int result = 0;
-    int i = 1;
+int remove_at(node_t **head, int index)
+{
+	int result = 0;
+	int i = 1;
 
-    node_t *to_be_removed = NULL;
-    node_t *pre_node = NULL;
+	node_t *to_be_removed = NULL;
+	node_t *pre_node = NULL;
 
-    if (*head == NULL) {
-        result = -1;
-    } else if (index == 0) {
-        to_be_removed = *head;
-        *head = (*head)->nxt_node_ptr;
-    } else {
-        pre_node = *head;
-        to_be_removed = (*head)->nxt_node_ptr;
+	if (*head == NULL) {
+		result = -1;
+	} else if (index == 0) {
+		to_be_removed = *head;
+		*head = (*head)->nxt_node_ptr;
+	} else {
+		pre_node = *head;
+		to_be_removed = (*head)->nxt_node_ptr;
 
-        while (i < index && to_be_removed->nxt_node_ptr != NULL) {
-            pre_node = pre_node->nxt_node_ptr;
-            to_be_removed = pre_node->nxt_node_ptr;
-            i++;
-        }
-    }
+		while (i < index && to_be_removed->nxt_node_ptr != NULL) {
+			pre_node = pre_node->nxt_node_ptr;
+			to_be_removed = pre_node->nxt_node_ptr;
+			i++;
+		}
+	}
 
-    if (i < index && to_be_removed->nxt_node_ptr == NULL) {
+	if (i < index && to_be_removed->nxt_node_ptr == NULL) {
 #ifdef DEBUG
-        printf("Not enough nodes in the linked list\n");
+		printf("Not enough nodes in the linked list\n");
 #endif
 
-        result = -1;
-    } else {
-        pre_node->nxt_node_ptr = to_be_removed->nxt_node_ptr;
+		result = -1;
+	} else {
+		pre_node->nxt_node_ptr = to_be_removed->nxt_node_ptr;
 
-        free(to_be_removed->node_content);
-        free(to_be_removed);
-    }
+		free(to_be_removed->node_content);
+		free(to_be_removed);
+	}
 
-    return result;
+	return result;
 }
 
-int sort_aes(node_t **head) {
-    int result = 0;
-    int i = 0;
-    int no_of_nodes = 0;
+int sort_aes(node_t **head)
+{
+	int result = 0;
+	int i = 0;
+	int no_of_nodes = 0;
 
-    int i_temp = 0;
-    float f_temp = 0.0F;
-    char c_temp = '\0';
+	int i_temp = 0;
+	float f_temp = 0.0F;
+	char c_temp = '\0';
 
-    int i_current = 0;
-    int i_next = 0;
+	int i_current = 0;
+	int i_next = 0;
 
-    float f_current = 0.0F;
-    float f_next = 0.0F;
+	float f_current = 0.0F;
+	float f_next = 0.0F;
 
-    char c_current = '\0';
-    char c_next = '\0';
+	char c_current = '\0';
+	char c_next = '\0';
 
-    node_t *current_node = NULL;
+	node_t *current_node = NULL;
 
-    current_node = *head;
+	current_node = *head;
 
-    while (current_node->nxt_node_ptr != NULL) {
-        current_node = current_node->nxt_node_ptr;
-        no_of_nodes++;
-    }
-    current_node = *head;
+	while (current_node->nxt_node_ptr != NULL) {
+		current_node = current_node->nxt_node_ptr;
+		no_of_nodes++;
+	}
+	current_node = *head;
 
-    if ((*head)->node_flag == INT_FLAG) {
-        for (i = 0; i < no_of_nodes; i++) {
-            while (current_node->nxt_node_ptr != NULL) {
-                i_current = current_node->node_content->i_num;
-                i_next = current_node->nxt_node_ptr->node_content->i_num;
+	if ((*head)->node_flag == INT_FLAG) {
+		for (i = 0; i < no_of_nodes; i++) {
+			while (current_node->nxt_node_ptr != NULL) {
+				i_current = current_node->node_content->i_num;
+				i_next = current_node->nxt_node_ptr
+						 ->node_content->i_num;
 
-                if (i_current > i_next) {
-                    /* swap integer numbers */
-                    i_temp = current_node->node_content->i_num;
+				if (i_current > i_next) {
+					/* swap integer numbers */
+					i_temp = current_node->node_content
+							 ->i_num;
 
-                    current_node->node_content->i_num =
-                        current_node->nxt_node_ptr->node_content->i_num;
+					current_node->node_content->i_num =
+						current_node->nxt_node_ptr
+							->node_content->i_num;
 
-                    current_node->nxt_node_ptr->node_content->i_num = i_temp;
-                }
-                current_node = current_node->nxt_node_ptr;
-            }
-            current_node = *head;
-        }
-    } else if ((*head)->node_flag == FLOAT_FLAG) {
-        for (i = 0; i < no_of_nodes; i++) {
-            while (current_node->nxt_node_ptr != NULL) {
-                f_current = current_node->node_content->f_num;
-                f_next = current_node->nxt_node_ptr->node_content->f_num;
+					current_node->nxt_node_ptr->node_content
+						->i_num = i_temp;
+				}
+				current_node = current_node->nxt_node_ptr;
+			}
+			current_node = *head;
+		}
+	} else if ((*head)->node_flag == FLOAT_FLAG) {
+		for (i = 0; i < no_of_nodes; i++) {
+			while (current_node->nxt_node_ptr != NULL) {
+				f_current = current_node->node_content->f_num;
+				f_next = current_node->nxt_node_ptr
+						 ->node_content->f_num;
 
-                if (f_current > f_next) {
-                    /* swap float numbers */
-                    f_temp = current_node->node_content->f_num;
+				if (f_current > f_next) {
+					/* swap float numbers */
+					f_temp = current_node->node_content
+							 ->f_num;
 
-                    current_node->node_content->f_num =
-                        current_node->nxt_node_ptr->node_content->f_num;
+					current_node->node_content->f_num =
+						current_node->nxt_node_ptr
+							->node_content->f_num;
 
-                    current_node->nxt_node_ptr->node_content->f_num = f_temp;
-                }
-                current_node = current_node->nxt_node_ptr;
-            }
-            current_node = *head;
-        }
-    } else if ((*head)->node_flag == CHAR_FLAG) {
-        for (i = 0; i < no_of_nodes; i++) {
-            while (current_node->nxt_node_ptr != NULL) {
-                c_current = current_node->node_content->c;
-                c_next = current_node->nxt_node_ptr->node_content->c;
+					current_node->nxt_node_ptr->node_content
+						->f_num = f_temp;
+				}
+				current_node = current_node->nxt_node_ptr;
+			}
+			current_node = *head;
+		}
+	} else if ((*head)->node_flag == CHAR_FLAG) {
+		for (i = 0; i < no_of_nodes; i++) {
+			while (current_node->nxt_node_ptr != NULL) {
+				c_current = current_node->node_content->c;
+				c_next = current_node->nxt_node_ptr
+						 ->node_content->c;
 
-                if (c_current > c_next) {
-                    /* swap characters */
-                    c_temp = current_node->node_content->c;
+				if (c_current > c_next) {
+					/* swap characters */
+					c_temp = current_node->node_content->c;
 
-                    current_node->node_content->c =
-                        current_node->nxt_node_ptr->node_content->c;
+					current_node->node_content->c =
+						current_node->nxt_node_ptr
+							->node_content->c;
 
-                    current_node->nxt_node_ptr->node_content->c = c_temp;
-                }
-                current_node = current_node->nxt_node_ptr;
-            }
-            current_node = *head;
-        }
-    } else {
+					current_node->nxt_node_ptr->node_content
+						->c = c_temp;
+				}
+				current_node = current_node->nxt_node_ptr;
+			}
+			current_node = *head;
+		}
+	} else {
 #ifdef DEBUG
-        printf("Unrecognised FLAG\n");
+		printf("Unrecognised FLAG\n");
 #endif
 
-        result = -1;
-    }
+		result = -1;
+	}
 
-    return result;
+	return result;
 }
 
-int sort_des(node_t **head) {
-    int result = 0;
-    int i = 0;
-    int no_of_nodes = 0;
+int sort_des(node_t **head)
+{
+	int result = 0;
+	int i = 0;
+	int no_of_nodes = 0;
 
-    int i_temp = 0;
-    float f_temp = 0.0F;
-    char c_temp = '\0';
+	int i_temp = 0;
+	float f_temp = 0.0F;
+	char c_temp = '\0';
 
-    int i_current = 0;
-    int i_next = 0;
+	int i_current = 0;
+	int i_next = 0;
 
-    float f_current = 0.0F;
-    float f_next = 0.0F;
+	float f_current = 0.0F;
+	float f_next = 0.0F;
 
-    char c_current = '\0';
-    char c_next = '\0';
+	char c_current = '\0';
+	char c_next = '\0';
 
-    node_t *current_node = NULL;
+	node_t *current_node = NULL;
 
-    current_node = *head;
+	current_node = *head;
 
-    while (current_node->nxt_node_ptr != NULL) {
-        current_node = current_node->nxt_node_ptr;
-        no_of_nodes++;
-    }
+	while (current_node->nxt_node_ptr != NULL) {
+		current_node = current_node->nxt_node_ptr;
+		no_of_nodes++;
+	}
 
-    current_node = *head;
+	current_node = *head;
 
-    if ((*head)->node_flag == INT_FLAG) {
-        for (i = 0; i < no_of_nodes; i++) {
-            while (current_node->nxt_node_ptr != NULL) {
-                i_current = current_node->node_content->i_num;
-                i_next = current_node->nxt_node_ptr->node_content->i_num;
+	if ((*head)->node_flag == INT_FLAG) {
+		for (i = 0; i < no_of_nodes; i++) {
+			while (current_node->nxt_node_ptr != NULL) {
+				i_current = current_node->node_content->i_num;
+				i_next = current_node->nxt_node_ptr
+						 ->node_content->i_num;
 
-                if (i_current < i_next) {
-                    /* swap integer numbers */
-                    i_temp = current_node->node_content->i_num;
+				if (i_current < i_next) {
+					/* swap integer numbers */
+					i_temp = current_node->node_content
+							 ->i_num;
 
-                    current_node->node_content->i_num =
-                        current_node->nxt_node_ptr->node_content->i_num;
+					current_node->node_content->i_num =
+						current_node->nxt_node_ptr
+							->node_content->i_num;
 
-                    current_node->nxt_node_ptr->node_content->i_num = i_temp;
-                }
+					current_node->nxt_node_ptr->node_content
+						->i_num = i_temp;
+				}
 #ifdef DEBUG
-                printf("Round %d\n", i);
+				printf("Round %d\n", i);
 #endif
-                current_node = current_node->nxt_node_ptr;
-            }
-            current_node = *head;
-        }
-    } else if ((*head)->node_flag == FLOAT_FLAG) {
-        for (i = 0; i < no_of_nodes; i++) {
-            while (current_node->nxt_node_ptr != NULL) {
-                f_current = current_node->node_content->f_num;
-                f_next = current_node->nxt_node_ptr->node_content->f_num;
+				current_node = current_node->nxt_node_ptr;
+			}
+			current_node = *head;
+		}
+	} else if ((*head)->node_flag == FLOAT_FLAG) {
+		for (i = 0; i < no_of_nodes; i++) {
+			while (current_node->nxt_node_ptr != NULL) {
+				f_current = current_node->node_content->f_num;
+				f_next = current_node->nxt_node_ptr
+						 ->node_content->f_num;
 
-                if (f_current < f_next) {
-                    /* swap float numbers */
-                    f_temp = current_node->node_content->f_num;
+				if (f_current < f_next) {
+					/* swap float numbers */
+					f_temp = current_node->node_content
+							 ->f_num;
 
-                    current_node->node_content->f_num =
-                        current_node->nxt_node_ptr->node_content->f_num;
+					current_node->node_content->f_num =
+						current_node->nxt_node_ptr
+							->node_content->f_num;
 
-                    current_node->nxt_node_ptr->node_content->f_num = f_temp;
-                }
-                current_node = current_node->nxt_node_ptr;
+					current_node->nxt_node_ptr->node_content
+						->f_num = f_temp;
+				}
+				current_node = current_node->nxt_node_ptr;
 #ifdef DEBUG
-                printf("Round %d\n", i);
+				printf("Round %d\n", i);
 #endif
-            }
-            current_node = *head;
-        }
-    } else if ((*head)->node_flag == CHAR_FLAG) {
-        for (i = 0; i < no_of_nodes; i++) {
-            while (current_node->nxt_node_ptr != NULL) {
-                c_current = current_node->node_content->c;
-                c_next = current_node->nxt_node_ptr->node_content->c;
+			}
+			current_node = *head;
+		}
+	} else if ((*head)->node_flag == CHAR_FLAG) {
+		for (i = 0; i < no_of_nodes; i++) {
+			while (current_node->nxt_node_ptr != NULL) {
+				c_current = current_node->node_content->c;
+				c_next = current_node->nxt_node_ptr
+						 ->node_content->c;
 
-                if (c_current < c_next) {
-                    /* swap characters */
-                    c_temp = current_node->node_content->c;
+				if (c_current < c_next) {
+					/* swap characters */
+					c_temp = current_node->node_content->c;
 
-                    current_node->node_content->c =
-                        current_node->nxt_node_ptr->node_content->c;
+					current_node->node_content->c =
+						current_node->nxt_node_ptr
+							->node_content->c;
 
-                    current_node->nxt_node_ptr->node_content->c = c_temp;
-                }
-                current_node = current_node->nxt_node_ptr;
+					current_node->nxt_node_ptr->node_content
+						->c = c_temp;
+				}
+				current_node = current_node->nxt_node_ptr;
 #ifdef DEBUG
-                printf("Round %d\n", i);
+				printf("Round %d\n", i);
 #endif
-            }
-            current_node = *head;
-        }
-    } else {
+			}
+			current_node = *head;
+		}
+	} else {
 #ifdef DEBUG
-        printf("Unrecognised FLAG\n");
+		printf("Unrecognised FLAG\n");
 #endif
 
-        result = -1;
-    }
+		result = -1;
+	}
 
-    return result;
+	return result;
 }
 
-int length_of(node_t *head) {
-    int length = 0;
+int length_of(node_t *head)
+{
+	int length = 0;
 
-    while (head != NULL) {
-        head = head->nxt_node_ptr;
-        length++;
-    }
+	while (head != NULL) {
+		head = head->nxt_node_ptr;
+		length++;
+	}
 
-    return length;
+	return length;
 }
 
-void display_nodes(node_t *head) {
-    int index = 0;
+void display_nodes(node_t *head)
+{
+	int index = 0;
 
-    while (head != NULL) {
-        printf("%d  |  ", index);
+	while (head != NULL) {
+		printf("%d  |  ", index);
 
-        if (head->node_flag == INT_FLAG) {
-            printf("Integer Value: %d\n", head->node_content->i_num);
-        } else if (head->node_flag == FLOAT_FLAG) {
-            printf("Float Value: %.2f\n", head->node_content->f_num);
-        } else if (head->node_flag == CHAR_FLAG) {
-            printf("Charactor Value: %c\n", head->node_content->c);
-        } else {
-            printf("ERROR\n");
-        }
+		if (head->node_flag == INT_FLAG) {
+			printf("Integer Value: %d\n",
+			       head->node_content->i_num);
+		} else if (head->node_flag == FLOAT_FLAG) {
+			printf("Float Value: %.2f\n",
+			       head->node_content->f_num);
+		} else if (head->node_flag == CHAR_FLAG) {
+			printf("Charactor Value: %c\n", head->node_content->c);
+		} else {
+			printf("ERROR\n");
+		}
 
-        head = head->nxt_node_ptr;
-        index++;
-    }
+		head = head->nxt_node_ptr;
+		index++;
+	}
 }
 
-int free_memory(node_t *head) {
-    /*
+int free_memory(node_t *head)
+{
+	/*
         This function is used at the end to free the memory of
         all nodes in the linked list as well as the memory of
         the content.
      */
-    int result = 0;
+	int result = 0;
 
-    node_t *to_be_removed = NULL;
+	node_t *to_be_removed = NULL;
 
-    while (head != NULL) {
-        to_be_removed = head;
-        head = head->nxt_node_ptr;
+	while (head != NULL) {
+		to_be_removed = head;
+		head = head->nxt_node_ptr;
 
-        /* Free the node contents' memory */
-        free(to_be_removed->node_content);
+		/* Free the node contents' memory */
+		free(to_be_removed->node_content);
 
-        /* Free the linked list nodes' memory */
-        free(to_be_removed);
-    }
+		/* Free the linked list nodes' memory */
+		free(to_be_removed);
+	}
 
-    return result;
+	return result;
 }
 
-int main(void) {
-    node_t *head = NULL;
+int main(void)
+{
+	node_t *head = NULL;
 
-    // int i_new[] = { 100, 1000, 10, 10000, 1 };
+	// int i_new[] = { 100, 1000, 10, 10000, 1 };
 
-    char c_new = 'A';
-    char c_new2 = 'B';
-    char c_new3 = 'C';
-    char c_new4 = 'F';
-    char c_new5 = 'Z';
+	char c_new = 'A';
+	char c_new2 = 'B';
+	char c_new3 = 'C';
+	char c_new4 = 'F';
+	char c_new5 = 'Z';
 
-    /*
+	/*
         add_first(&head, &i_new[0], INT_FLAG);
         add_first(&head, &i_new[1], INT_FLAG);
         add_last(&head, &i_new[2], INT_FLAG);
@@ -524,24 +559,24 @@ int main(void) {
         add_at(&head, &i_new[4], 0, INT_FLAG);
     */
 
-    add_first(&head, &c_new, CHAR_FLAG);
-    add_first(&head, &c_new2, CHAR_FLAG);
-    add_last(&head, &c_new3, CHAR_FLAG);
-    add_at(&head, &c_new4, 3, CHAR_FLAG);
-    add_at(&head, &c_new5, 2, CHAR_FLAG);
+	add_first(&head, &c_new, CHAR_FLAG);
+	add_first(&head, &c_new2, CHAR_FLAG);
+	add_last(&head, &c_new3, CHAR_FLAG);
+	add_at(&head, &c_new4, 3, CHAR_FLAG);
+	add_at(&head, &c_new5, 2, CHAR_FLAG);
 
-    /*
+	/*
         remove_first(&head);
         remove_at(&head, 4);
         remove_last(&head);
      */
 
-    sort_aes(&head);
-    /* sort_des(&head); */
+	sort_aes(&head);
+	/* sort_des(&head); */
 
-    printf("There are %d nodes\n", length_of(head));
-    display_nodes(head);
-    free_memory(head);
+	printf("There are %d nodes\n", length_of(head));
+	display_nodes(head);
+	free_memory(head);
 
-    return 0;
+	return 0;
 }
