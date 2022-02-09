@@ -13,45 +13,42 @@
 #define FLOAT_FLAG 1
 #define CHAR_FLAG 2
 
-template <class T>
-class SingleLinkedList
-{
+template <class T> class SingleLinkedList {
     private:
-        typedef struct node
-        {
-            T *content;
-            struct node *next_node_ptr;
-        } node_t;
+	typedef struct node {
+		T *content;
+		struct node *next_node_ptr;
+	} node_t;
 
-        node_t *head;
+	node_t *head;
 
-        int node_flag;
+	int node_flag;
 
-        static int no_of_nodes;
+	static int no_of_nodes;
 
     public:
-        SingleLinkedList();
-        SingleLinkedList(T new_var, int node_flag);
-        ~SingleLinkedList();
+	SingleLinkedList();
+	SingleLinkedList(T new_var, int node_flag);
+	~SingleLinkedList();
 
-        int add_first(T new_var, int node_flag);
-        int add_last(T new_var, int node_flag);
-        int insert_at(T new_var, int node_flag, int position);
+	int add_first(T new_var, int node_flag);
+	int add_last(T new_var, int node_flag);
+	int insert_at(T new_var, int node_flag, int position);
 
-        int delete_first();
-        int delete_last();
-        int delete_at(int position);
+	int delete_first();
+	int delete_last();
+	int delete_at(int position);
 
-        T get_element(int position);
+	T get_element(int position);
 
-        int sort_des();                // @todo
-        int sort_aes();                // @todo
+	int sort_des(); // @todo
+	int sort_aes(); // @todo
 
-        static int get_length();
+	static int get_length();
 
-        int get_node_flag();
+	int get_node_flag();
 
-        void display_nodes();
+	void display_nodes();
 
-        int free_memory();
+	int free_memory();
 };
