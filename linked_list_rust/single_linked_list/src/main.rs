@@ -7,7 +7,7 @@ struct LinktedList<T: std::fmt::Debug + std::marker::Copy> {
 }
 
 impl<T: std::fmt::Debug + std::marker::Copy> LinktedList<T> {
-
+    // TODO: linked list methods
 }
 
 fn main() {
