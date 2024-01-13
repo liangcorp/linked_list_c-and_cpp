@@ -1,6 +1,6 @@
 /**
  * @file single_linked_list.h
- * @author Chen Liang (chen.liang.mail@protonmail.com)
+ * @author Chen Liang (chen.liang.cn@outlook.com)
  * @brief Implementation of single linked list in C
  * @version 0.1
  * @date 2021-05-22

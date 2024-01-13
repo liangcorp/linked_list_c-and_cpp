@@ -1,6 +1,6 @@
 /**
  * @file doubly_linked_list.c
- * @author Chen Liang (chen.liang.mail@protonmail.com)
+ * @author Chen Liang (chen.liang.cn@outlook.com)
  * @brief Implementation of doubly linked list
  * @version 0.1
  * @date 2021-05-23

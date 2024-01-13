@@ -1,6 +1,6 @@
 /**
  * @file doubly_linked_list.h
- * @author Chen Liang (chen.liang.mail@protonmail.com)
+ * @author Chen Liang (chen.liang.cn@outlook.com)
  * @brief Create doubly linked list using C language
  * @version 0.1
  * @date 2021-05-23

@@ -1,6 +1,6 @@
 /**
  * @file single_linked_list.h
- * @author Chen Liang (chen.liang.mail@protonmail.com)
+ * @author Chen Liang (chen.liang.cn@outlook.com)
  * @brief Header file for the single linked list written in C++
  * @version 0.1
  * @date 2021-05-24
