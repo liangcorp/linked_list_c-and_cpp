@@ -5,4 +5,4 @@ Double linked list in C is working but not as it should be.
 
 May implement doubly linked list in C++ in the future.
 
-@To do - Linekd list in Rust, Java and Javascript
+@To do - Linked list in Rust.
