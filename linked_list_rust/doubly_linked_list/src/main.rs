@@ -1,6 +1,8 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
+type Pointer<T> = Option<Rc<RefCell<Node<T>>>>;
+
 struct List<T> {
     head: Pointer<T>,
     tail: Pointer<T>,
@@ -63,13 +65,13 @@ impl<T: std::fmt::Display> List<T> {
         }
     }
 
-
     fn remove_front(&mut self) {
         if self.head.is_none() {
             println!("The list is empty");
         } else {
-            self.head.take().map(|old_head| {
-                match old_head.borrow_mut().next.take() {
+            self.head
+                .take()
+                .map(|old_head| match old_head.borrow_mut().next.take() {
                     Some(new_head) => {
                         new_head.borrow_mut().prev.take();
                         self.head = Some(new_head);
@@ -80,8 +82,7 @@ impl<T: std::fmt::Display> List<T> {
                         println!("list is emtpy after removal");
                         None
                     }
-                }
-            });
+                });
         }
     }
 
@@ -89,8 +90,9 @@ impl<T: std::fmt::Display> List<T> {
         if self.tail.is_none() {
             println!("the list is emtpy");
         } else {
-            self.tail.take().map(|old_tail| {
-                match old_tail.borrow_mut().prev.take() {
+            self.tail
+                .take()
+                .map(|old_tail| match old_tail.borrow_mut().prev.take() {
                     Some(new_tail) => {
                         new_tail.borrow_mut().next.take();
                         self.tail = Some(new_tail);
@@ -102,8 +104,7 @@ impl<T: std::fmt::Display> List<T> {
                         println!("List is empty after removal");
                         None
                     }
-                }
-            });
+                });
         }
     }
 
@@ -119,8 +120,6 @@ impl<T: std::fmt::Display> List<T> {
         }
     }
 }
-
-type Pointer<T> = Option<Rc<RefCell<Node<T>>>>;
 
 fn main() {
     let mut list1: List<i32> = List::new();
