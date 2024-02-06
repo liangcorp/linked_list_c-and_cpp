@@ -109,3 +109,5 @@ main
 # doubly_linked_list
 # single_linked_list
 \**
+
+**/zig-cache/*

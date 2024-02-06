@@ -26,12 +26,3 @@ pub fn display(head: *Node) !void {
         node = node.next orelse break;
     }
 }
-pub fn main() !void {
-    var head = Node{ .x = 9, .next = null };
-    try add_last(&head, 10);
-    try add_last(&head, 11);
-    try add_last(&head, 12);
-    try add_last(&head, 13);
-
-    try display(&head);
-}
