@@ -15,24 +15,21 @@
 #define CHAR_FLAG 2
 
 /* This maybe a mistake */
-typedef union content
-{
-    int i_num;
-    float f_num;
-    char c;
+typedef union content {
+	int i_num;
+	float f_num;
+	char c;
 } content_t;
 
-typedef struct node
-{
-    content_t *node_content;
-    int node_flag;
-    struct node *nxt_node_ptr;
+typedef struct node {
+	content_t *node_content;
+	int node_flag;
+	struct node *nxt_node_ptr;
 } node_t;
 
 int add_first(node_t **head, void *new_var, int content_flag);
 int add_last(node_t **head, void *new_var, int content_flag);
-int add_at(node_t **head, void *new_var, int index,
-           int content_flag);
+int add_at(node_t **head, void *new_var, int index, int content_flag);
 
 int remove_first(node_t **head);
 int remove_last(node_t **head);
